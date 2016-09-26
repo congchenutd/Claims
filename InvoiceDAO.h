@@ -13,8 +13,6 @@ protected:
     Persistable* createObject(int id);
 
 private:
-    static Invoice::State  string2State(const QString& string);
-    static QString         state2String(Invoice::State state);
     static QList<QDate>    string2Dates(const QString& string);
     static QString         dates2String(const QList<QDate>& dates);
 

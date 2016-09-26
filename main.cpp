@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 
 	Library* library = Library::getInstance();
 	LibraryDAO* libraryDAO = LibraryDAO::getInstance();
-//	libraryDAO->registerDAO(ProviderDAO::getInstance());
+	libraryDAO->registerDAO(ProviderDAO::getInstance());
 	libraryDAO->registerDAO(AttachmentDAO::getInstance());
 	libraryDAO->registerDAO(InvoiceDAO::getInstance());
 
@@ -74,13 +74,15 @@ int main(int argc, char *argv[])
 	attachment->setPath("Path");
 	library->addPersistable(attachment);
 
-//	Provider* provider = new Provider(2);
-//	provider->setName("Hello");
-//	library->addPersistable(provider);
+	Provider* provider = new Provider(2);
+	provider->setName("Hello");
+	library->addPersistable(provider);
 
 	Invoice* invoice = new Invoice(1);
 	invoice->setAmount(100);
-//	invoice->setProvider(provider);
+	invoice->setServiceDates("2016-01-01;2016-01-08");
+	invoice->setInvoiceDate(QDate::fromString("2016-01-09", "yyyy-MM-dd"));
+	invoice->setProvider(provider);
 	invoice->setAttachment(attachment);
 	library->addPersistable(invoice);
 

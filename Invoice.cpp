@@ -2,7 +2,8 @@
 #include "InvoiceDAO.h"
 
 Invoice::Invoice(int id)
-    : Attachable(id, InvoiceDAO::getInstance())
+    : Attachable(id, InvoiceDAO::getInstance()),
+      _provider(0)
 {}
 
 Provider* Invoice::getProvider() const {
@@ -13,12 +14,20 @@ void Invoice::setProvider(Provider* provider) {
     _provider = provider;
 }
 
-QList<QDate> Invoice::getServiceDates() const {
-    return _serviceDates;
+QString Invoice::getServiceDates() const
+{
+    QStringList dates;
+    foreach (const QDate& date, _serviceDates)
+        dates << date.toString("yyyy-MM-dd");
+    return dates.join(";");
 }
 
-void Invoice::setServiceDates(const QList<QDate>& dates) {
-    _serviceDates = dates;
+void Invoice::setServiceDates(const QString& dates)
+{
+    _serviceDates.clear();
+    QStringList dateList = dates.split(";");
+    foreach (const QString& date, dateList)
+        _serviceDates << QDate::fromString(date, "yyyy-MM-dd");
 }
 
 QDate Invoice::getInvoiceDate() const {

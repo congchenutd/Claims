@@ -26,38 +26,6 @@ Persistable* InvoiceDAO::createObject(int id) {
     return new Invoice(id);
 }
 
-Invoice::State InvoiceDAO::string2State(const QString& string)
-{
-    if (string.toLower() == "undefined" || string.isEmpty())
-        return Invoice::Undefined;
-    if (string.toLower() == "unfiled")
-        return Invoice::Unfiled;
-    if (string.toLower() == "filed")
-        return Invoice::Filed;
-    if (string.toLower() == "paid")
-        return Invoice::Paid;
-    if (string.toLower() == "deposited")
-        return Invoice::Deposited;
-    return Invoice::Unfiled;
-}
-
-QString InvoiceDAO::state2String(Invoice::State state)
-{
-    switch (state)
-    {
-    case Invoice::Unfiled:
-        return "Unfiled";
-    case Invoice::Filed:
-        return "Filed";
-    case Invoice::Paid:
-        return "Paid";
-    case Invoice::Deposited:
-        return "Deposited";
-    default:
-        return "Undefined";
-    }
-}
-
 QList<QDate> InvoiceDAO::string2Dates(const QString& string)
 {
     QStringList dates = string.split(";");

@@ -1,7 +1,9 @@
 #include "Claim.h"
 
 Claim::Claim(int id)
-    : Attachable (id, 0)
+    : Attachable (id, 0),
+      _invoice(0),
+      _result(0)
 {}
 
 QString Claim::getClaimee() const {

@@ -1,7 +1,9 @@
 #include "Attachable.h"
 
 Attachable::Attachable(int id, DAO* dao)
-    : Persistable (id, dao) {}
+    : Persistable (id, dao),
+      _attachment(0)
+{}
 
 Attachment* Attachable::getAttachment() const {
     return _attachment;

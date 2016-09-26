@@ -16,7 +16,7 @@ class Claim: public Attachable
     Q_PROPERTY(QString      ClaimID      READ getClaimID     WRITE setClaimID)
     Q_PROPERTY(QDate        Date         READ getDate        WRITE setDate)
     Q_PROPERTY(Invoice*     Invoice      READ getInvoice     WRITE setInvoice)
-    Q_PROPERTY(ClaimResult* ClaimResult  READ getClaimResult WRITE setClaimResult)
+//    Q_PROPERTY(ClaimResult* ClaimResult  READ getClaimResult WRITE setClaimResult)
 
 public:
     Claim(int id);
