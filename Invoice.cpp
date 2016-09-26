@@ -1,13 +1,8 @@
 #include "Invoice.h"
 #include "InvoiceDAO.h"
 
-Invoice::Invoice(int id, const QList<QDate>& serviceDates,
-                 const QDate& date, double amount, State state)
-    : Attachable(id, InvoiceDAO::getInstance()),
-      _serviceDates(serviceDates),
-      _invoiceDate(date),
-      _amount(amount),
-      _state(state)
+Invoice::Invoice(int id)
+    : Attachable(id, InvoiceDAO::getInstance())
 {}
 
 Provider* Invoice::getProvider() const {
@@ -42,10 +37,10 @@ void Invoice::setAmount(double amount) {
     _amount = amount;
 }
 
-Invoice::State Invoice::getState() const {
+QString Invoice::getState() const {
     return _state;
 }
 
-void Invoice::setState(Invoice::State state) {
+void Invoice::setState(const QString& state) {
     _state = state;
 }

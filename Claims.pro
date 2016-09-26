@@ -1,16 +1,9 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-09-16T16:06:11
-#
-#-------------------------------------------------
-
-QT       += core gui sql
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui sql widgets
 
 TARGET = Claims
 TEMPLATE = app
 
+INCLUDEPATH +=	../MyORM
 
 SOURCES +=\
         MainWindow.cpp \
@@ -21,16 +14,18 @@ SOURCES +=\
     Attachment.cpp \
     Provider.cpp \
     Attachable.cpp \
-    Persistable.cpp \
-    DAO.cpp \
     InvoiceDAO.cpp \
     ProviderDAO.cpp \
-    Library.cpp \
-    LibraryDAO.cpp \
     Main.cpp \
     AttachmentDAO.cpp \
     AttachableDAO.cpp \
-    Relationship.cpp
+    ClaimDAO.cpp \
+    ../MyORM/DAO.cpp \
+    ../MyORM/LibraryDAO.cpp \
+    ../MyORM/Persistable.cpp \
+    ../MyORM/Relationship.cpp \
+    ../MyORM/LibraryBase.cpp \
+    Library.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -40,14 +35,16 @@ HEADERS  += MainWindow.h \
     Attachment.h \
     Provider.h \
     Attachable.h \
-    Persistable.h \
-    DAO.h \
     InvoiceDAO.h \
     ProviderDAO.h \
-    Library.h \
-    LibraryDAO.h \
     AttachmentDAO.h \
     AttachableDAO.h \
-    Relationship.h
+    ClaimDAO.h \
+    ../MyORM/DAO.h \
+    ../MyORM/LibraryDAO.h \
+    ../MyORM/Persistable.h \
+    ../MyORM/Relationship.h \
+    ../MyORM/LibraryBase.h \
+    Library.h
 
 FORMS    += MainWindow.ui

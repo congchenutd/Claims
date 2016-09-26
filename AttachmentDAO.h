@@ -11,16 +11,11 @@ class AttachmentDAO: public DAO
 public:
     static AttachmentDAO* getInstance();
 
-    Attachment* load(int id) const;
-
 protected:
-    void createTable();
+    Persistable* createObject(int id);
 
 private:
     AttachmentDAO();
-    ~AttachmentDAO() {}
-    void update(Persistable* persistable);
-    void insert(Persistable* persistable);
 };
 
 #endif // ATTACHMENTDAO_H

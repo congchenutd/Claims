@@ -1,9 +1,8 @@
 #include "Provider.h"
 #include "ProviderDAO.h"
 
-Provider::Provider(int id, const QString& name)
-    : Persistable (id, ProviderDAO::getInstance()),
-      _name(name)
+Provider::Provider(int id)
+    : Persistable (id, ProviderDAO::getInstance())
 {}
 
 QString Provider::getName() const {

@@ -6,6 +6,12 @@
 #include "Invoice.h"
 #include "Provider.h"
 #include "Library.h"
+#include "DAO.h"
+#include "LibraryDAO.h"
+#include "ProviderDAO.h"
+#include "InvoiceDAO.h"
+#include "AttachmentDAO.h"
+#include "Attachment.h"
 
 #include <QApplication>
 #include <QSqlDatabase>
@@ -13,6 +19,7 @@
 #include <QSqlError>
 #include <QDir>
 #include <QSqlQuery>
+#include <QDebug>
 
 // workaround for a bug on mac > Mavericks
 // Finder returns / as the working path of an app bundle
@@ -44,47 +51,45 @@ bool openDB(const QString& name)
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
-	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
+//	QApplication app(argc, argv);
+//	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#ifdef Q_OS_OSX
-    QDir::setCurrent(getCurrentPath());
-#endif
+//#ifdef Q_OS_OSX
+//    QDir::setCurrent(getCurrentPath());
+//#endif
 
     if (!openDB("Claims.db"))
         return 1;
 
-    //    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
+	qRegisterMetaType<Provider*>("Provider*");
 
-//    return a.exec();
+	Library* library = Library::getInstance();
+	LibraryDAO* libraryDAO = LibraryDAO::getInstance();
+//	libraryDAO->registerDAO(ProviderDAO::getInstance());
+	libraryDAO->registerDAO(AttachmentDAO::getInstance());
+	libraryDAO->registerDAO(InvoiceDAO::getInstance());
 
-    Library* library = Library::getInstance();
-//    library->load();
-    Provider* ALLS = new Provider(1, "ALLS");
-    Invoice* invoice = new Invoice(1, QList<QDate>() << QDate::fromString("2016-01-01", "yyyy-MM-dd")
-                                                     << QDate::fromString("2016-01-08", "yyyy-MM-dd"),
-                                   QDate::fromString("2016-01-09", "yyyy-MM-dd"),
-                                   100,
-                                   Invoice::Unfiled);
-    invoice->setProvider(ALLS);
-    library->addProvider(ALLS);
-    library->addInvoice(invoice);
-    library->save();
+	Attachment* attachment = new Attachment(1);
+	attachment->setTitle("Title");
+	attachment->setPath("Path");
+	library->addPersistable(attachment);
 
-//    QList<QDate> dates;
-//    dates << QDate::fromString("2016-01-01", "yyyy-MM-dd") << QDate::fromString("2016-01-08", "yyyy-MM-dd");
-//    QDate date = QDate::fromString("2016-01-08", "yyyy-MM-dd");
-//    Invoice* invoice1 = new Invoice(1, ALLS, dates, date, 100);
-//    Claim* claim1 = new Claim("1", QDate::fromString("2016-01-08", "yyyy-MM-dd"), invoice1);
-//    ClaimResult* result1 = new ClaimResult("1", QDate::fromString("2016-01-15", "yyyy-MM-dd"), 80, ClaimResult::Paid, claim1);
-//    Attachment claimDoc("1", "claim", "");
-//    Attachment invoiceDoc("2", "invoice", "");
-//    Attachment eob("3", "eob", "");
-//    invoice1->addAttachment(invoiceDoc);
-//    claim1->addAttachment(claimDoc);
-//    result1->addAttachment(eob);
+//	Provider* provider = new Provider(2);
+//	provider->setName("Hello");
+//	library->addPersistable(provider);
+
+	Invoice* invoice = new Invoice(1);
+	invoice->setAmount(100);
+//	invoice->setProvider(provider);
+	invoice->setAttachment(attachment);
+	library->addPersistable(invoice);
+
+	libraryDAO->save(library);
+
+//	provider = (Provider*) ProviderDAO::getInstance()->load(2);
+//	invoice  = (Invoice*)  InvoiceDAO ::getInstance()->load(1);
+
+//	qDebug() << provider->getID() << invoice->getID();
 
     return 0;
 }

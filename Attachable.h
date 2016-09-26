@@ -7,15 +7,17 @@
 
 class Attachable: public Persistable
 {
+    Q_OBJECT
+    Q_PROPERTY(Attachment* Attachment READ getAttachment WRITE setAttachment)
+
 public:
     Attachable(int id, DAO* dao);
-    virtual ~Attachable() = 0;
 
-    void addAttachment(const Attachment& attachment);
-    QList<Attachment> getAllAttachments() const;
+    Attachment* getAttachment() const;
+    void setAttachment(Attachment* attachment);
 
 protected:
-    QList<Attachment> _attachments;
+    Attachment* _attachment;
 };
 
 #endif // ATTACHABLE_H

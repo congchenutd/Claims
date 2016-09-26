@@ -9,8 +9,7 @@ class AttachableDAO: public DAO
 {
 protected:
     AttachableDAO(const QString& tableName);
-    void createAttachmentTable();
-    void updateAttachments(Persistable* persistable);
+//    void updateAttachments(Persistable* persistable);
 
 private:
     QString getAttachmentTableName() const;

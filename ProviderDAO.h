@@ -9,16 +9,11 @@ class ProviderDAO: public DAO
 public:
     static ProviderDAO* getInstance();
 
-    Provider* load(int id) const;
-
 protected:
-    void createTable();
+    Persistable* createObject(int id);
 
 private:
     ProviderDAO();
-    ~ProviderDAO() {}
-    void update(Persistable* persistable);
-    void insert(Persistable* persistable);
 };
 
 #endif // PROVIDERDAO_H

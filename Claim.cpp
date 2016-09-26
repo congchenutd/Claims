@@ -1,20 +1,15 @@
 #include "Claim.h"
 
-Claim::Claim(int id, const QString& source, const QString& claimID, const QDate& date, Invoice* invoice)
-    : Attachable (id, 0),
-      _source(source),
-      _claimID(claimID),
-      _date(date),
-      _invoice(invoice),
-      _result(0)
+Claim::Claim(int id)
+    : Attachable (id, 0)
 {}
 
-QString Claim::getSource() const {
-    return _source;
+QString Claim::getClaimee() const {
+    return _claimee;
 }
 
-void Claim::setSource(const QString& source) {
-    _source = source;
+void Claim::setClaimee(const QString& source) {
+    _claimee = source;
 }
 
 QString Claim::getClaimID() const {
@@ -41,10 +36,10 @@ void Claim::setInvoice(Invoice* invoice) {
     _invoice = invoice;
 }
 
-ClaimResult* Claim::getResult() const {
+ClaimResult* Claim::getClaimResult() const {
     return _result;
 }
 
-void Claim::setResult(ClaimResult* result) {
+void Claim::setClaimResult(ClaimResult* result) {
     _result = result;
 }

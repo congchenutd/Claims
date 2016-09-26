@@ -1,7 +1,6 @@
-#include "Library.h"
-#include "LibraryDAO.h"
-#include "Provider.h"
 #include "Invoice.h"
+#include "Library.h"
+#include "Provider.h"
 
 Library* Library::getInstance()
 {
@@ -9,41 +8,12 @@ Library* Library::getInstance()
     return &instance;
 }
 
-Library::Library() {
-    _dao = LibraryDAO::getInstance();
+Provider* Library::getProvider(int id) {
+    return dynamic_cast<Provider*>(getPersistable("Provider", id));
 }
 
-Library::~Library() {
+Invoice* Library::getInvoice(int id) {
+    return dynamic_cast<Invoice*>(getPersistable("Invoice", id));
 }
 
-void Library::load() {
-    _dao->load(this);
-}
-
-void Library::save() {
-    _dao->save(this);
-}
-
-void Library::addProvider(Provider* provider) {
-    _providers.insert(provider->getName(), provider);
-}
-
-Provider *Library::getProvider(const QString& name) const {
-    return _providers.contains(name) ? _providers[name] : 0;
-}
-
-QMap<QString, Provider*> Library::getAllProviders() const {
-    return _providers;
-}
-
-void Library::addInvoice(Invoice* invoice) {
-    _invoices.insert(invoice->getID(), invoice);
-}
-
-Invoice *Library::getInvoice(int ID) const {
-    return _invoices.contains(ID) ? _invoices[ID] : 0;
-}
-
-QMap<int, Invoice*> Library::getAllInvoices() const {
-    return _invoices;
-}
+Library::Library() {}

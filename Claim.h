@@ -11,11 +11,18 @@ class ClaimResult;
 
 class Claim: public Attachable
 {
-public:
-    Claim(int id, const QString& source, const QString& claimID, const QDate& date, Invoice* invoice);
+    Q_OBJECT
+    Q_PROPERTY(QString      Claimee      READ getClaimee     WRITE setClaimee)
+    Q_PROPERTY(QString      ClaimID      READ getClaimID     WRITE setClaimID)
+    Q_PROPERTY(QDate        Date         READ getDate        WRITE setDate)
+    Q_PROPERTY(Invoice*     Invoice      READ getInvoice     WRITE setInvoice)
+    Q_PROPERTY(ClaimResult* ClaimResult  READ getClaimResult WRITE setClaimResult)
 
-    QString getSource() const;
-    void setSource(const QString& source);
+public:
+    Claim(int id);
+
+    QString getClaimee() const;
+    void setClaimee(const QString& source);
 
     QString getClaimID() const;
     void setClaimID(const QString& claimID);
@@ -26,11 +33,11 @@ public:
     Invoice* getInvoice() const;
     void setInvoice(Invoice* invoice);
 
-    ClaimResult* getResult() const;
-    void setResult(ClaimResult* result);
+    ClaimResult* getClaimResult() const;
+    void setClaimResult(ClaimResult* result);
 
 private:
-    QString         _source;
+    QString         _claimee;
     QString         _claimID;
     QDate           _date;
     Invoice*        _invoice;

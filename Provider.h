@@ -7,8 +7,11 @@
 
 class Provider: public Persistable
 {
+    Q_OBJECT
+    Q_PROPERTY(QString Name READ getName WRITE setName)
+
 public:
-    Provider(int id, const QString& name);
+    Provider(int id);
 
     QString getName() const;
     void setName(const QString& name);

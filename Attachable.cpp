@@ -3,12 +3,10 @@
 Attachable::Attachable(int id, DAO* dao)
     : Persistable (id, dao) {}
 
-Attachable::~Attachable() {}
-
-void Attachable::addAttachment(const Attachment& attachment) {
-    _attachments << attachment;
+Attachment* Attachable::getAttachment() const {
+    return _attachment;
 }
 
-QList<Attachment> Attachable::getAllAttachments() const {
-    return _attachments;
+void Attachable::setAttachment(Attachment* attachment) {
+    _attachment = attachment;
 }
