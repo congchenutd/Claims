@@ -1,7 +1,8 @@
 #include "Claim.h"
+#include "ClaimDAO.h"
 
 Claim::Claim(int id)
-    : Attachable (id, 0),
+    : Attachable (id, ClaimDAO::getInstance()),
       _invoice(0),
       _result(0)
 {}

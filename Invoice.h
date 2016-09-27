@@ -19,6 +19,9 @@ class Invoice: public Attachable
     Q_PROPERTY(Provider*    Provider     READ getProvider        WRITE setProvider)
 
 public:
+    typedef enum {Undefined, Unfiled, Filed, Paid, Deposited} State;
+
+public:
     Invoice(int id);
 
     QString getServiceDates() const;

@@ -2,7 +2,8 @@
 #include <QSqlQuery>
 #include <QVariant>
 
-ProviderDAO::ProviderDAO(): DAO("Provider")
+ProviderDAO::ProviderDAO()
+    : DAO("Provider")
 {
     addMapping("Name", "NAME", "varchar");
     createTable();

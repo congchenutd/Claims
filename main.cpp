@@ -12,6 +12,8 @@
 #include "InvoiceDAO.h"
 #include "AttachmentDAO.h"
 #include "Attachment.h"
+#include "ClaimDAO.h"
+#include "ClaimResultDAO.h"
 
 #include <QApplication>
 #include <QSqlDatabase>
@@ -62,29 +64,46 @@ int main(int argc, char *argv[])
         return 1;
 
 	qRegisterMetaType<Provider*>("Provider*");
+    qRegisterMetaType<Invoice*> ("Invoice*");
+    qRegisterMetaType<Claim*>   ("Claim*");
 
 	Library* library = Library::getInstance();
 	LibraryDAO* libraryDAO = LibraryDAO::getInstance();
-	libraryDAO->registerDAO(ProviderDAO::getInstance());
-	libraryDAO->registerDAO(AttachmentDAO::getInstance());
-	libraryDAO->registerDAO(InvoiceDAO::getInstance());
+//	libraryDAO->registerDAO(ProviderDAO::getInstance());
+//	libraryDAO->registerDAO(AttachmentDAO::getInstance());
+    libraryDAO->registerDAO(InvoiceDAO::getInstance());
+    libraryDAO->registerDAO(ClaimResultDAO::getInstance());
+    libraryDAO->registerDAO(ClaimDAO::getInstance());
 
-	Attachment* attachment = new Attachment(1);
-	attachment->setTitle("Title");
-	attachment->setPath("Path");
-	library->addPersistable(attachment);
+//	Attachment* attachment = new Attachment(1);
+//	attachment->setTitle("Title");
+//	attachment->setPath("Path");
+//	library->addPersistable(attachment);
 
-	Provider* provider = new Provider(2);
-	provider->setName("Hello");
-	library->addPersistable(provider);
+//	Provider* provider = new Provider(2);
+//	provider->setName("Hello");
+//	library->addPersistable(provider);
 
-	Invoice* invoice = new Invoice(1);
-	invoice->setAmount(100);
-	invoice->setServiceDates("2016-01-01;2016-01-08");
-	invoice->setInvoiceDate(QDate::fromString("2016-01-09", "yyyy-MM-dd"));
-	invoice->setProvider(provider);
-	invoice->setAttachment(attachment);
-	library->addPersistable(invoice);
+    Invoice* invoice = new Invoice(3);
+    invoice->setAmount(100);
+    invoice->setServiceDates("2016-01-01;2016-01-08");
+    invoice->setInvoiceDate(QDate::fromString("2016-01-09", "yyyy-MM-dd"));
+//	invoice->setProvider(provider);
+//	invoice->setAttachment(attachment);
+    library->addPersistable(invoice);
+
+    Claim* claim = new Claim(4);
+    claim->setClaimee("BlueShield");
+    claim->setClaimID("ASDFASDFASDF");
+    claim->setDate(QDate::fromString("2016-01-20", "yyyy-MM-dd"));
+    claim->setInvoice(invoice);
+    library->addPersistable(claim);
+
+    ClaimResult* result = new ClaimResult(5);
+    result->setDate(QDate::fromString("2016-01-30", "yyyy-MM-dd"));
+    result->setPaidAmount(80);
+    result->setState("Paid");
+    library->addPersistable(result);
 
 	libraryDAO->save(library);
 

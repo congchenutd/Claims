@@ -25,7 +25,8 @@ SOURCES +=\
     ../MyORM/Persistable.cpp \
     ../MyORM/Relationship.cpp \
     ../MyORM/LibraryBase.cpp \
-    Library.cpp
+    Library.cpp \
+    ClaimResultDAO.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -45,6 +46,7 @@ HEADERS  += MainWindow.h \
     ../MyORM/Persistable.h \
     ../MyORM/Relationship.h \
     ../MyORM/LibraryBase.h \
-    Library.h
+    Library.h \
+    ClaimResultDAO.h
 
 FORMS    += MainWindow.ui

@@ -1,3 +1,4 @@
+#include "Claim.h"
 #include "ClaimDAO.h"
 
 #include <QSqlQuery>
