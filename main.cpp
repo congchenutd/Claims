@@ -135,7 +135,5 @@ int main(int argc, char *argv[])
 //             << result->getID()
 //             << deposit->getID();
 
-    libraryDAO->load(library);
-
     return 0;
 }
