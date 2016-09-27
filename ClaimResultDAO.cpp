@@ -3,7 +3,7 @@
 #include <QSqlQuery>
 
 ClaimResultDAO::ClaimResultDAO()
-    : AttachableDAO("Claim")
+    : AttachableDAO("ClaimResult")
 {
     addMapping("Date",          "DATE",         "date");
     addMapping("PaidAmount",    "PAIDAMOUNT",   "double");

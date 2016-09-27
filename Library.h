@@ -3,16 +3,24 @@
 
 #include "LibraryBase.h"
 
+class Attachment;
 class Provider;
 class Invoice;
+class Claim;
+class ClaimResult;
+class Deposit;
 
 class Library: public LibraryBase
 {
 public:
     static Library* getInstance();
 
-    Provider* getProvider(int id);
-    Invoice*  getInvoice (int id);
+    Attachment*     getAttachment   (int id);
+    Provider*       getProvider     (int id);
+    Invoice*        getInvoice      (int id);
+    Claim*          getClaim        (int id);
+    ClaimResult*    getClaimResult  (int id);
+    Deposit*        getDeposit      (int id);
 
 private:
     Library();

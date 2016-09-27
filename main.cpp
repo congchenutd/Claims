@@ -14,6 +14,8 @@
 #include "Attachment.h"
 #include "ClaimDAO.h"
 #include "ClaimResultDAO.h"
+#include "DepositDAO.h"
+#include "Deposit.h"
 
 #include <QApplication>
 #include <QSqlDatabase>
@@ -63,54 +65,77 @@ int main(int argc, char *argv[])
     if (!openDB("Claims.db"))
         return 1;
 
-	qRegisterMetaType<Provider*>("Provider*");
-    qRegisterMetaType<Invoice*> ("Invoice*");
-    qRegisterMetaType<Claim*>   ("Claim*");
+    qRegisterMetaType<Provider*>    ("Provider*");
+    qRegisterMetaType<Invoice*>     ("Invoice*");
+    qRegisterMetaType<Claim*>       ("Claim*");
+    qRegisterMetaType<ClaimResult*> ("ClaimResult*");
 
 	Library* library = Library::getInstance();
 	LibraryDAO* libraryDAO = LibraryDAO::getInstance();
-//	libraryDAO->registerDAO(ProviderDAO::getInstance());
-//	libraryDAO->registerDAO(AttachmentDAO::getInstance());
-    libraryDAO->registerDAO(InvoiceDAO::getInstance());
-    libraryDAO->registerDAO(ClaimResultDAO::getInstance());
-    libraryDAO->registerDAO(ClaimDAO::getInstance());
+    libraryDAO->registerDAO(ProviderDAO     ::getInstance());
+    libraryDAO->registerDAO(AttachmentDAO   ::getInstance());
+    libraryDAO->registerDAO(InvoiceDAO      ::getInstance());
+    libraryDAO->registerDAO(ClaimResultDAO  ::getInstance());
+    libraryDAO->registerDAO(DepositDAO      ::getInstance());
+    libraryDAO->registerDAO(ClaimDAO        ::getInstance());
 
-//	Attachment* attachment = new Attachment(1);
-//	attachment->setTitle("Title");
-//	attachment->setPath("Path");
-//	library->addPersistable(attachment);
+//    Attachment* attachment = new Attachment(1);
+//    attachment->setTitle("Title");
+//    attachment->setPath("Path");
+//    library->addPersistable(attachment);
 
-//	Provider* provider = new Provider(2);
-//	provider->setName("Hello");
-//	library->addPersistable(provider);
+//    Provider* provider = new Provider(2);
+//    provider->setName("Hello");
+//    library->addPersistable(provider);
 
-    Invoice* invoice = new Invoice(3);
-    invoice->setAmount(100);
-    invoice->setServiceDates("2016-01-01;2016-01-08");
-    invoice->setInvoiceDate(QDate::fromString("2016-01-09", "yyyy-MM-dd"));
-//	invoice->setProvider(provider);
-//	invoice->setAttachment(attachment);
-    library->addPersistable(invoice);
+//    Invoice* invoice = new Invoice(3);
+//    invoice->setAmount(100);
+//    invoice->setServiceDates("2016-01-01;2016-01-08");
+//    invoice->setInvoiceDate(QDate::fromString("2016-01-09", "yyyy-MM-dd"));
+//    invoice->setProvider(provider);
+//    invoice->setAttachment(attachment);
+//    library->addPersistable(invoice);
 
-    Claim* claim = new Claim(4);
-    claim->setClaimee("BlueShield");
-    claim->setClaimID("ASDFASDFASDF");
-    claim->setDate(QDate::fromString("2016-01-20", "yyyy-MM-dd"));
-    claim->setInvoice(invoice);
-    library->addPersistable(claim);
+//    ClaimResult* result = new ClaimResult(5);
+//    result->setDate(QDate::fromString("2016-01-30", "yyyy-MM-dd"));
+//    result->setPaidAmount(80);
+//    result->setState("Paid");
+//    result->setAttachment(attachment);
+//    library->addPersistable(result);
 
-    ClaimResult* result = new ClaimResult(5);
-    result->setDate(QDate::fromString("2016-01-30", "yyyy-MM-dd"));
-    result->setPaidAmount(80);
-    result->setState("Paid");
-    library->addPersistable(result);
+//    Claim* claim = new Claim(4);
+//    claim->setClaimee("BlueShield");
+//    claim->setClaimID("ASDFASDFASDF");
+//    claim->setDate(QDate::fromString("2016-01-20", "yyyy-MM-dd"));
+//    claim->setInvoice(invoice);
+//    claim->setClaimResult(result);
+//    claim->setAttachment(attachment);
+//    library->addPersistable(claim);
 
-	libraryDAO->save(library);
+//    Deposit* deposit = new Deposit(6);
+//    deposit->setDate(QDate::fromString("2016-02-01", "yyyy-MM-dd"));
+//    deposit->setAmount(80);
+//    deposit->setClaimResult(result);
+//    deposit->setAttachment(attachment);
+//    library->addPersistable(deposit);
 
-//	provider = (Provider*) ProviderDAO::getInstance()->load(2);
-//	invoice  = (Invoice*)  InvoiceDAO ::getInstance()->load(1);
+//	libraryDAO->save(library);
 
-//	qDebug() << provider->getID() << invoice->getID();
+//    attachment  = (Attachment*)     AttachmentDAO   ::getInstance()->load(1);
+//    provider    = (Provider*)       ProviderDAO     ::getInstance()->load(2);
+//    invoice     = (Invoice*)        InvoiceDAO      ::getInstance()->load(3);
+//    claim       = (Claim*)          ClaimDAO        ::getInstance()->load(4);
+//    result      = (ClaimResult*)    ClaimResultDAO  ::getInstance()->load(5);
+//    deposit     = (Deposit*)        DepositDAO      ::getInstance()->load(6);
+
+//    qDebug() << attachment->getID()
+//             << provider->getID()
+//             << invoice->getID()
+//             << claim->getID()
+//             << result->getID()
+//             << deposit->getID();
+
+    libraryDAO->load(library);
 
     return 0;
 }

@@ -1,5 +1,6 @@
 #include "Claim.h"
 #include "ClaimDAO.h"
+#include "ClaimResult.h"
 
 Claim::Claim(int id)
     : Attachable (id, ClaimDAO::getInstance()),
@@ -45,4 +46,5 @@ ClaimResult* Claim::getClaimResult() const {
 
 void Claim::setClaimResult(ClaimResult* result) {
     _result = result;
+    result->setClaim(this);
 }

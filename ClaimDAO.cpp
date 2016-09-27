@@ -10,7 +10,7 @@ ClaimDAO::ClaimDAO()
     addMapping("ClaimID",   "CLAIMID",  "varchar");
     addMapping("Date",      "DATE",     "date");
     addRelationships(Relationship("Claim", "Invoice"));
-//    addRelationships(Relationship("Claim", "ClaimResult"));
+    addRelationships(Relationship("Claim", "ClaimResult"));
     createTable();
 }
 

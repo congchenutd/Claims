@@ -1,11 +1,10 @@
 #include "ClaimResult.h"
+#include "ClaimResultDAO.h"
 
 ClaimResult::ClaimResult(int id)
-    : Attachable (id, 0),
+    : Attachable (id, ClaimResultDAO::getInstance()),
       _claim(0)
-{
-
-}
+{}
 
 QDate ClaimResult::getDate() const {
     return _date;
