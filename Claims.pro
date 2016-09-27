@@ -27,7 +27,10 @@ SOURCES +=\
     ../MyORM/LibraryBase.cpp \
     Library.cpp \
     ClaimResultDAO.cpp \
-    DepositDAO.cpp
+    DepositDAO.cpp \
+    AllClaimsWidget.cpp \
+    ClaimElement.cpp \
+    ClaimItem.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -49,6 +52,12 @@ HEADERS  += MainWindow.h \
     ../MyORM/LibraryBase.h \
     Library.h \
     ClaimResultDAO.h \
-    DepositDAO.h
+    DepositDAO.h \
+    AllClaimsWidget.h \
+    ClaimElement.h \
+    ClaimItem.h
 
 FORMS    += MainWindow.ui
+
+RESOURCES += \
+    Resources.qrc

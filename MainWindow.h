@@ -8,7 +8,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget* parent = 0);
+
+private slots:
+    void onAddProvider();
+    void onAddInvoice();
+    void onAddClaim();
+    void onAddClaimResult();
+    void onAddDeposit();
+    void onAddAttachment();
 
 private:
     Ui::MainWindow ui;

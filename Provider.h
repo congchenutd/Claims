@@ -1,11 +1,11 @@
 #ifndef PROVIDER_H
 #define PROVIDER_H
 
-#include "Persistable.h"
+#include "ClaimElement.h"
 
 #include <QString>
 
-class Provider: public Persistable
+class Provider: public ClaimElement
 {
     Q_OBJECT
     Q_PROPERTY(QString Name READ getName WRITE setName)

@@ -2,10 +2,10 @@
 #define ATTACHABLE_H
 
 #include "Attachment.h"
-#include "Persistable.h"
+#include "ClaimElement.h"
 #include <QList>
 
-class Attachable: public Persistable
+class Attachable: public ClaimElement
 {
     Q_OBJECT
     Q_PROPERTY(Attachment* Attachment READ getAttachment WRITE setAttachment)

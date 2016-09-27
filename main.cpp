@@ -55,12 +55,12 @@ bool openDB(const QString& name)
 
 int main(int argc, char *argv[])
 {
-//	QApplication app(argc, argv);
-//	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QApplication app(argc, argv);
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-//#ifdef Q_OS_OSX
-//    QDir::setCurrent(getCurrentPath());
-//#endif
+#ifdef Q_OS_OSX
+    QDir::setCurrent(getCurrentPath());
+#endif
 
     if (!openDB("Claims.db"))
         return 1;
@@ -72,12 +72,12 @@ int main(int argc, char *argv[])
 
 	Library* library = Library::getInstance();
 	LibraryDAO* libraryDAO = LibraryDAO::getInstance();
-    libraryDAO->registerDAO(ProviderDAO     ::getInstance());
-    libraryDAO->registerDAO(AttachmentDAO   ::getInstance());
-    libraryDAO->registerDAO(InvoiceDAO      ::getInstance());
-    libraryDAO->registerDAO(ClaimResultDAO  ::getInstance());
-    libraryDAO->registerDAO(DepositDAO      ::getInstance());
-    libraryDAO->registerDAO(ClaimDAO        ::getInstance());
+//    libraryDAO->registerDAO(ProviderDAO     ::getInstance());
+//    libraryDAO->registerDAO(AttachmentDAO   ::getInstance());
+//    libraryDAO->registerDAO(InvoiceDAO      ::getInstance());
+//    libraryDAO->registerDAO(ClaimResultDAO  ::getInstance());
+//    libraryDAO->registerDAO(DepositDAO      ::getInstance());
+//    libraryDAO->registerDAO(ClaimDAO        ::getInstance());
 
 //    Attachment* attachment = new Attachment(1);
 //    attachment->setTitle("Title");
@@ -135,5 +135,7 @@ int main(int argc, char *argv[])
 //             << result->getID()
 //             << deposit->getID();
 
-    return 0;
+    MainWindow wnd;
+    wnd.showMaximized();
+    return app.exec();
 }

@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Images/Claim.png</file>
+        <file>Images/ClaimResult.png</file>
+        <file>Images/Deposit.png</file>
+        <file>Images/Invoice.png</file>
+        <file>Images/Provider.png</file>
+        <file>Images/Quit.png</file>
+        <file>Images/Settings.png</file>
+        <file>Images/Attachment.png</file>
+    </qresource>
+</RCC>

@@ -2,7 +2,7 @@
 #include "ProviderDAO.h"
 
 Provider::Provider(int id)
-    : Persistable (id, ProviderDAO::getInstance())
+    : ClaimElement (id, ProviderDAO::getInstance())
 {}
 
 QString Provider::getName() const {

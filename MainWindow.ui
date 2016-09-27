@@ -1,24 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>796</width>
+    <height>623</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>MainWindow</string>
+  <property name="windowTitle">
+   <string>Claims</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <property name="windowIcon">
+   <iconset resource="Resources.qrc">
+    <normaloff>:/Images/Invoice.png</normaloff>:/Images/Invoice.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QGraphicsView" name="allClaimsView"/>
+      <widget class="QListView" name="detailsView"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>796</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSettings"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>64</width>
+     <height>48</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAddProvider"/>
+   <addaction name="actionAddInvoice"/>
+   <addaction name="actionAddClaim"/>
+   <addaction name="actionAddClaimResult"/>
+   <addaction name="actionAddDeposit"/>
+   <addaction name="actionAddAttachment"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Settings.png</normaloff>:/Images/Settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Quit.png</normaloff>:/Images/Quit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionAddInvoice">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Invoice.png</normaloff>:/Images/Invoice.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Invoice</string>
+   </property>
+  </action>
+  <action name="actionAddClaim">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Claim.png</normaloff>:/Images/Claim.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Claim</string>
+   </property>
+  </action>
+  <action name="actionAddClaimResult">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/ClaimResult.png</normaloff>:/Images/ClaimResult.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Claim Result</string>
+   </property>
+  </action>
+  <action name="actionAddDeposit">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Deposit.png</normaloff>:/Images/Deposit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Deposit</string>
+   </property>
+  </action>
+  <action name="actionAddProvider">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Provider.png</normaloff>:/Images/Provider.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Provider</string>
+   </property>
+  </action>
+  <action name="actionAddAttachment">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Attachment.png</normaloff>:/Images/Attachment.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Attachment</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <resources/>
- <connections/>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>311</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
