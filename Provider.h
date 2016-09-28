@@ -16,6 +16,8 @@ public:
     QString getName() const;
     void setName(const QString& name);
 
+    QString toHtml() const;
+
 private:
     QString _name;
 };

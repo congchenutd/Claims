@@ -1,6 +1,11 @@
 #include "ClaimItem.h"
 #include "MainWindow.h"
 #include "Invoice.h"
+#include "ClaimItemDlg.h"
+#include "Provider.h"
+#include "Claim.h"
+#include "ClaimResult.h"
+#include "Deposit.h"
 #include <QGraphicsTextItem>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -33,30 +38,36 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::onAddProvider()
 {
-
+    ClaimItemDlg dlg(new Provider(-1), this);
+    dlg.exec();
 }
 
 void MainWindow::onAddInvoice()
 {
-
+    ClaimItemDlg dlg(new Invoice(-1), this);
+    dlg.exec();
 }
 
 void MainWindow::onAddClaim()
 {
-
+    ClaimItemDlg dlg(new Claim(-1), this);
+    dlg.exec();
 }
 
 void MainWindow::onAddClaimResult()
 {
-
+    ClaimItemDlg dlg(new ClaimResult(-1), this);
+    dlg.exec();
 }
 
 void MainWindow::onAddDeposit()
 {
-
+    ClaimItemDlg dlg(new Deposit(-1), this);
+    dlg.exec();
 }
 
 void MainWindow::onAddAttachment()
 {
-
+    ClaimItemDlg dlg(new Attachment(-1), this);
+    dlg.exec();
 }

@@ -39,6 +39,8 @@ public:
     Provider* getProvider() const;
     void setProvider(Provider* provider);
 
+    QString toHtml() const;
+
 private:
     QList<QDate>    _serviceDates;
     QDate           _invoiceDate;

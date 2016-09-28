@@ -30,7 +30,8 @@ SOURCES +=\
     DepositDAO.cpp \
     AllClaimsWidget.cpp \
     ClaimElement.cpp \
-    ClaimItem.cpp
+    ClaimItem.cpp \
+    ClaimItemDlg.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -55,7 +56,8 @@ HEADERS  += MainWindow.h \
     DepositDAO.h \
     AllClaimsWidget.h \
     ClaimElement.h \
-    ClaimItem.h
+    ClaimItem.h \
+    ClaimItemDlg.h
 
 FORMS    += MainWindow.ui
 

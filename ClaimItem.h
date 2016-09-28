@@ -15,6 +15,9 @@ public:
     void setNext(ClaimItem* next);
 
 private:
+    QString formatElement(ClaimElement* element) const;
+
+private:
     ClaimElement*       _element;
     QGraphicsTextItem*  _text;
     ClaimItem*          _next;

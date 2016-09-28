@@ -1,19 +1,8 @@
 #include "Attachment.h"
 #include "AttachmentDAO.h"
 
-Attachment::Attachment(const Attachment& another)
-    : Persistable (another.getID(), another.getDAO())
-{
-
-}
-
-Attachment& Attachment::operator = (const Attachment &another)
-{
-    return *this;
-}
-
 Attachment::Attachment(int id)
-    : Persistable(id, AttachmentDAO::getInstance())
+    : ClaimElement(id, AttachmentDAO::getInstance())
 {}
 
 QString Attachment::getTitle() const {

@@ -14,6 +14,17 @@ void Invoice::setProvider(Provider* provider) {
     _provider = provider;
 }
 
+QString Invoice::toHtml() const
+{
+    return tr("<H2>Invoice</H2>\
+               <P>Service dates: %1<br>\
+                   Invoice date: %2<br>\
+                   Amount: %3<br>\
+                   State: %4\
+               </P>")
+              .arg(getServiceDates()).arg(getInvoiceDate().toString("yyyy-MM-dd")).arg(getAmount()).arg(getState());
+}
+
 QString Invoice::getServiceDates() const
 {
     QStringList dates;

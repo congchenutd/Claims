@@ -1,19 +1,17 @@
 #ifndef ATTACHMENT_H
 #define ATTACHMENT_H
 
-#include "Persistable.h"
+#include "ClaimElement.h"
 
 #include <QString>
 
-class Attachment: public Persistable
+class Attachment: public ClaimElement
 {
     Q_OBJECT
     Q_PROPERTY(QString Title    READ getTitle   WRITE setTitle)
     Q_PROPERTY(QString Path     READ getPath    WRITE setPath)
 
 public:
-    Attachment(const Attachment& another);
-    Attachment& operator = (const Attachment& another);
     Attachment(int id);
 
     QString getTitle() const;
