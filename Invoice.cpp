@@ -57,10 +57,10 @@ void Invoice::setAmount(double amount) {
     _amount = amount;
 }
 
-QString Invoice::getState() const {
+Invoice::State Invoice::getState() const {
     return _state;
 }
 
-void Invoice::setState(const QString& state) {
+void Invoice::setState(const State& state) {
     _state = state;
 }

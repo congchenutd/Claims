@@ -11,15 +11,16 @@ class Provider;
 
 class Invoice: public Attachable
 {
+public:
+    enum State {Unfiled, Filed, Paid, Deposited};
+    Q_ENUMS(State)
+
     Q_OBJECT
     Q_PROPERTY(QString      ServiceDates READ getServiceDates    WRITE setServiceDates)
     Q_PROPERTY(QDate        InvoiceDate  READ getInvoiceDate     WRITE setInvoiceDate)
     Q_PROPERTY(double       Amount       READ getAmount          WRITE setAmount)
-    Q_PROPERTY(QString      State        READ getState           WRITE setState)
+    Q_PROPERTY(State        State        READ getState           WRITE setState)
     Q_PROPERTY(Provider*    Provider     READ getProvider        WRITE setProvider)
-
-public:
-    typedef enum {Undefined, Unfiled, Filed, Paid, Deposited} State;
 
 public:
     Invoice(int id);
@@ -33,8 +34,8 @@ public:
     double getAmount() const;
     void setAmount(double amount);
 
-    QString getState() const;
-    void setState(const QString& state);
+    State getState() const;
+    void setState(const State& state);
 
     Provider* getProvider() const;
     void setProvider(Provider* provider);
@@ -46,7 +47,7 @@ private:
     QDate           _invoiceDate;
     double          _amount;
     QString         _note;
-    QString         _state;
+    State           _state;
     Provider*       _provider;
 };
 
