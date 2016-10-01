@@ -1,6 +1,7 @@
 #include "ClaimElement.h"
 #include "ClaimItem.h"
 
+#include <PropertyPrinter.h>
 #include <QFont>
 #include <QFontMetrics>
 #include <QMetaProperty>
@@ -16,7 +17,8 @@ ClaimItem::ClaimItem(QGraphicsItem* parent)
 void ClaimItem::setClaimElement(ClaimElement* element)
 {
     _element = element;
-    _text->setHtml(formatElement(element));
+
+    _text->setHtml(PersistablePrinter().toHtml(element));
     _text->setFont(QFont("Arial", 18));
 
     // Set geometry of the polygon and text
@@ -44,29 +46,4 @@ void ClaimItem::setClaimElement(ClaimElement* element)
 
 void ClaimItem::setNext(ClaimItem* next) {
     _next = next;
-}
-
-QString ClaimItem::formatElement(ClaimElement* element) const
-{
-    QString result;
-    const QMetaObject* metaObj = element->metaObject();
-    QString title = metaObj->className();
-    result += "<H2>" + title + "</H2>";
-
-    QStringList lines;
-    int count = metaObj->propertyCount();
-    for (int i = 0; i < count; ++i)
-    {
-        const char* propertyName = metaObj->property(i).name();
-        QVariant value = element->property(propertyName);
-
-        // skip objectName and pointers
-        if (QString(propertyName) == "objectName" || value.type() == QVariant::UserType)
-            continue;
-
-        lines << QString(propertyName) + ": " + value.toString();
-    }
-    result += "<P>" + lines.join("<BR>") + "</P>";
-
-    return result;
 }

@@ -32,7 +32,8 @@ SOURCES +=\
     ClaimElement.cpp \
     ClaimItem.cpp \
     ClaimItemDlg.cpp \
-    ../MyORM/PropertyPrinter.cpp
+    ../MyORM/PropertyPrinter.cpp \
+    ../MyORM/PropertyWriter.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -59,7 +60,9 @@ HEADERS  += MainWindow.h \
     ClaimElement.h \
     ClaimItem.h \
     ClaimItemDlg.h \
-    ../MyORM/PropertyPrinter.h
+    ../MyORM/PropertyPrinter.h \
+    ../MyORM/PropertyWriter.h \
+    ../MyORM/Constants.h
 
 FORMS    += MainWindow.ui
 

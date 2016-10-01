@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     invoice->setAmount(100);
     invoice->setServiceDates("2016-01-01;2016-01-02");
     invoice->setInvoiceDate(QDate::fromString("2016-01-08", "yyyy-MM-dd"));
+    invoice->setState(Invoice::Deposited);
     item->setClaimElement(invoice);
 
     connect(ui.actionAddProvider,       SIGNAL(triggered()), SLOT(onAddProvider()));
