@@ -9,8 +9,6 @@ class ClaimElement : public Persistable
 {
 public:
     ClaimElement(int id, DAO* dao);
-
-    virtual QString toHtml() const;
 };
 
 #endif // CLAIMELEMENT_H

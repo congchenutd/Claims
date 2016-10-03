@@ -14,31 +14,12 @@ void Invoice::setProvider(Provider* provider) {
     _provider = provider;
 }
 
-QString Invoice::toHtml() const
-{
-    return tr("<H2>Invoice</H2>\
-               <P>Service dates: %1<br>\
-                   Invoice date: %2<br>\
-                   Amount: %3<br>\
-                   State: %4\
-               </P>")
-              .arg(getServiceDates()).arg(getInvoiceDate().toString("yyyy-MM-dd")).arg(getAmount()).arg(getState());
+QVariantList Invoice::getServiceDates() const {
+    return _serviceDates;
 }
 
-QString Invoice::getServiceDates() const
-{
-    QStringList dates;
-    foreach (const QDate& date, _serviceDates)
-        dates << date.toString("yyyy-MM-dd");
-    return dates.join(";");
-}
-
-void Invoice::setServiceDates(const QString& dates)
-{
-    _serviceDates.clear();
-    QStringList dateList = dates.split(";");
-    foreach (const QString& date, dateList)
-        _serviceDates << QDate::fromString(date, "yyyy-MM-dd");
+void Invoice::setServiceDates(const QVariantList& dates) {
+    _serviceDates = dates;
 }
 
 QDate Invoice::getInvoiceDate() const {

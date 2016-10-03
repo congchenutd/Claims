@@ -6,6 +6,7 @@
 #include "Claim.h"
 #include "ClaimResult.h"
 #include "Deposit.h"
+#include "Constants.h"
 #include <QGraphicsTextItem>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -24,8 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Invoice* invoice = new Invoice(1);
     invoice->setAmount(100);
-    invoice->setServiceDates("2016-01-01;2016-01-02");
-    invoice->setInvoiceDate(QDate::fromString("2016-01-08", "yyyy-MM-dd"));
+    invoice->setServiceDates(QVariantList()
+                             << QDate::fromString("2016-01-01", DATE_FORMAT)
+                             << QDate::fromString("2016-01-02", DATE_FORMAT));
+    invoice->setInvoiceDate(QDate::fromString("2016-01-08", DATE_FORMAT));
     invoice->setState(Invoice::Deposited);
     item->setClaimElement(invoice);
 

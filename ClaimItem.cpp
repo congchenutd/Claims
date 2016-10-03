@@ -1,15 +1,16 @@
 #include "ClaimElement.h"
 #include "ClaimItem.h"
-
-#include <PropertyPrinter.h>
+#include "PropertyPrinter.h"
 #include <QFont>
 #include <QFontMetrics>
-#include <QMetaProperty>
+#include <QDebug>
 
 ClaimItem::ClaimItem(QGraphicsItem* parent)
     : QGraphicsPolygonItem(parent)
 {
-    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsFocusable);
+    setFlags(QGraphicsItem::ItemIsMovable |
+             QGraphicsItem::ItemIsSelectable |
+             QGraphicsItem::ItemIsFocusable);
     _text = new QGraphicsTextItem(this);
     _next = 0;
 }

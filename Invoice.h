@@ -6,6 +6,7 @@
 
 #include <QDate>
 #include <QString>
+#include <QVariantList>
 
 class Provider;
 
@@ -16,17 +17,18 @@ public:
     Q_ENUMS(State)
 
     Q_OBJECT
-    Q_PROPERTY(QString      ServiceDates READ getServiceDates    WRITE setServiceDates)
-    Q_PROPERTY(QDate        InvoiceDate  READ getInvoiceDate     WRITE setInvoiceDate)
-    Q_PROPERTY(double       Amount       READ getAmount          WRITE setAmount)
-    Q_PROPERTY(State        State        READ getState           WRITE setState)
-    Q_PROPERTY(Provider*    Provider     READ getProvider        WRITE setProvider)
+    Q_PROPERTY(QVariantList ServiceDates    READ getServiceDates    WRITE setServiceDates)
+    Q_PROPERTY(QDate        InvoiceDate     READ getInvoiceDate     WRITE setInvoiceDate)
+    Q_PROPERTY(double       Amount          READ getAmount          WRITE setAmount)
+//    Q_PROPERTY(QString      Note            READ getNote            WRITE setNote)
+    Q_PROPERTY(State        State           READ getState           WRITE setState)
+    Q_PROPERTY(Provider*    Provider        READ getProvider        WRITE setProvider)
 
 public:
     Invoice(int id);
 
-    QString getServiceDates() const;
-    void setServiceDates(const QString& dates);
+    QVariantList getServiceDates() const;
+    void setServiceDates(const QVariantList& dates);
 
     QDate getInvoiceDate() const;
     void setInvoiceDate(const QDate& date);
@@ -40,10 +42,8 @@ public:
     Provider* getProvider() const;
     void setProvider(Provider* provider);
 
-    QString toHtml() const;
-
 private:
-    QList<QDate>    _serviceDates;
+    QVariantList    _serviceDates;
     QDate           _invoiceDate;
     double          _amount;
     QString         _note;
