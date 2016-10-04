@@ -1,10 +1,14 @@
 #include "ClaimElement.h"
 #include "ClaimItemDlg.h"
+#include "Constants.h"
+#include <QComboBox>
+#include <QDateEdit>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMetaProperty>
+#include <QSpinBox>
 
 ClaimItemDlg::ClaimItemDlg(ClaimElement* element, QWidget* parent) :
     QDialog(parent),
@@ -16,17 +20,21 @@ ClaimItemDlg::ClaimItemDlg(ClaimElement* element, QWidget* parent) :
     setWindowTitle(metaObj->className());
 
     int count = metaObj->propertyCount();
-    int i = 0;
-    for (; i < count; ++i)
+    int row = 0;
+    for (int i = metaObj->propertyOffset(); i < count; ++i, ++row)
     {
-        const char* propertyName = metaObj->property(i).name();
-        QVariant value = element->property(propertyName);
+        QMetaProperty property = metaObj->property(i);
+        const char* propertyName = property.name();
 
-        if (QString(propertyName) == "objectName" || value.type() == QVariant::UserType)
+        if (property.type() == QVariant::UserType)
             continue;
 
         _gridLayout->addWidget(new QLabel(QString(propertyName)), i, 0);
-        _gridLayout->addWidget(new QLineEdit, i, 1);
+        QWidget* editor = createEditor(property);
+        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
+        QVariant value = element->property(propertyName);
+        editor->setProperty(editorUserPropertyName, value);
+        _gridLayout->addWidget(editor, i, 1);
     }
 
     _buttonBox = new QDialogButtonBox(this);
@@ -34,5 +42,42 @@ ClaimItemDlg::ClaimItemDlg(ClaimElement* element, QWidget* parent) :
     _buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
     connect(_buttonBox, SIGNAL(accepted()), SLOT(accept()));
     connect(_buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    _gridLayout->addWidget(_buttonBox, i, 1, 1, 1);
+    _gridLayout->addWidget(_buttonBox, row + 1, 1, 1, 1);
+}
+
+QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
+{
+    if (property.isEnumType())
+    {
+        QComboBox* combo = new QComboBox;
+        QMetaEnum enumerator = property.enumerator();
+        for (int i = 0; i < enumerator.keyCount(); ++i)
+            combo->insertItem(i, enumerator.key(i));
+        return combo;
+    }
+
+    switch (property.type())
+    {
+    case QVariant::Int: {
+        QSpinBox* spinBox = new QSpinBox;
+        spinBox->setMinimum(INT_MIN);
+        spinBox->setMaximum(INT_MAX);
+        return spinBox;
+    }
+    case QVariant::Double: {
+        QDoubleSpinBox* doubleSpinBox = new QDoubleSpinBox;
+        doubleSpinBox->setMinimum(INT_MIN);
+        doubleSpinBox->setMaximum(INT_MAX);
+        return doubleSpinBox;
+    }
+    case QVariant::Date: {
+        QDateEdit* dateEdit = new QDateEdit;
+        dateEdit->setDisplayFormat(DATE_FORMAT);
+        dateEdit->setDate(QDate::currentDate());
+        dateEdit->setCalendarPopup(true);
+        return dateEdit;
+    }
+    default:
+        return new QLineEdit;
+    }
 }

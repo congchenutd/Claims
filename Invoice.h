@@ -20,7 +20,6 @@ public:
     Q_PROPERTY(QVariantList ServiceDates    READ getServiceDates    WRITE setServiceDates)
     Q_PROPERTY(QDate        InvoiceDate     READ getInvoiceDate     WRITE setInvoiceDate)
     Q_PROPERTY(double       Amount          READ getAmount          WRITE setAmount)
-//    Q_PROPERTY(QString      Note            READ getNote            WRITE setNote)
     Q_PROPERTY(State        State           READ getState           WRITE setState)
     Q_PROPERTY(Provider*    Provider        READ getProvider        WRITE setProvider)
 

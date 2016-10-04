@@ -3,6 +3,8 @@
 
 Invoice::Invoice(int id)
     : Attachable(id, InvoiceDAO::getInstance()),
+      _amount(0),
+      _state(Unfiled),
       _provider(0)
 {}
 
