@@ -14,35 +14,17 @@ ClaimItemDlg::ClaimItemDlg(ClaimElement* element, QWidget* parent) :
     QDialog(parent),
     _element(element)
 {
-    _gridLayout = new QGridLayout(this);
+    loadFrom(element);
+}
 
-    const QMetaObject* metaObj = element->metaObject();
-    setWindowTitle(metaObj->className());
+void ClaimItemDlg::accept()
+{
+    saveTo(_element);
+    return QDialog::accept();
+}
 
-    int count = metaObj->propertyCount();
-    int row = 0;
-    for (int i = metaObj->propertyOffset(); i < count; ++i, ++row)
-    {
-        QMetaProperty property = metaObj->property(i);
-        const char* propertyName = property.name();
-
-        if (property.type() == QVariant::UserType)
-            continue;
-
-        _gridLayout->addWidget(new QLabel(QString(propertyName)), i, 0);
-        QWidget* editor = createEditor(property);
-        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
-        QVariant value = element->property(propertyName);
-        editor->setProperty(editorUserPropertyName, value);
-        _gridLayout->addWidget(editor, i, 1);
-    }
-
-    _buttonBox = new QDialogButtonBox(this);
-    _buttonBox->setOrientation(Qt::Horizontal);
-    _buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
-    connect(_buttonBox, SIGNAL(accepted()), SLOT(accept()));
-    connect(_buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    _gridLayout->addWidget(_buttonBox, row + 1, 1, 1, 1);
+ClaimElement* ClaimItemDlg::getElement() const {
+    return _element;
 }
 
 QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
@@ -79,5 +61,49 @@ QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
     }
     default:
         return new QLineEdit;
+    }
+}
+
+void ClaimItemDlg::loadFrom(ClaimElement* element)
+{
+    _gridLayout = new QGridLayout(this);
+    const QMetaObject* metaObj = element->metaObject();
+    setWindowTitle(metaObj->className());
+
+    int count = metaObj->propertyCount();
+    int row = 0;
+    for (int i = metaObj->propertyOffset(); i < count; ++i, ++row)
+    {
+        QMetaProperty property = metaObj->property(i);
+        const char* propertyName = property.name();
+
+        if (property.type() == QVariant::UserType)
+            continue;
+
+        _gridLayout->addWidget(new QLabel(QString(propertyName)), i, 0);
+        QWidget* editor = createEditor(property);
+        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
+        QVariant value = element->property(propertyName);
+        editor->setProperty(editorUserPropertyName, value);
+        _gridLayout->addWidget(editor, i, 1);
+        _editors.insert(QString(propertyName), editor);
+    }
+
+    _buttonBox = new QDialogButtonBox(this);
+    _buttonBox->setOrientation(Qt::Horizontal);
+    _buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    connect(_buttonBox, SIGNAL(accepted()), SLOT(accept()));
+    connect(_buttonBox, SIGNAL(rejected()), SLOT(reject()));
+    _gridLayout->addWidget(_buttonBox, row + 1, 1, 1, 1);
+}
+
+void ClaimItemDlg::saveTo(ClaimElement* element)
+{
+    for (Editors::iterator it = _editors.begin(); it != _editors.end(); ++it)
+    {
+        QString     propertyName    = it.key();
+        QWidget*    editor          = it.value();
+        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
+        element->setProperty(propertyName.toLatin1(), editor->property(editorUserPropertyName));
     }
 }

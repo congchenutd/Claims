@@ -15,15 +15,20 @@ class ClaimItemDlg : public QDialog
 
 public:
     explicit ClaimItemDlg(ClaimElement* element, QWidget* parent = 0);
+    void accept();
+    ClaimElement* getElement() const;
 
 private:
     QWidget* createEditor(const QMetaProperty& property) const;
+    void loadFrom(ClaimElement* element);
+    void saveTo  (ClaimElement* element);
 
 private:
-    ClaimElement*           _element;
-    QDialogButtonBox*       _buttonBox;
-    QGridLayout*            _gridLayout;
-    QMap<QString, QWidget*> _editors;
+    typedef QMap<QString, QWidget*> Editors;
+    ClaimElement*       _element;
+    QDialogButtonBox*   _buttonBox;
+    QGridLayout*        _gridLayout;
+    Editors             _editors;
 };
 
 #endif // CLAIMITEMDLG_H

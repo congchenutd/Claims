@@ -3,6 +3,8 @@
 
 #include "ui_MainWindow.h"
 
+class ClaimElement;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -19,7 +21,11 @@ private slots:
     void onAddAttachment();
 
 private:
+    void newItem(ClaimElement* element);
+
+private:
     Ui::MainWindow ui;
+    QGraphicsScene* _scene;
 };
 
 #endif // MAINWINDOW_H

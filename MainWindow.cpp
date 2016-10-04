@@ -14,23 +14,23 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui.setupUi(this);
 
-    QGraphicsScene* scene = new QGraphicsScene(this);
-    scene->setSceneRect(0, 0, 1000, 500);
+    _scene = new QGraphicsScene(this);
+    _scene->setSceneRect(0, 0, 1000, 500);
 
-    ui.allClaimsView->setScene(scene);
+    ui.allClaimsView->setScene(_scene);
     ui.allClaimsView->setRenderHint(QPainter::Antialiasing);
 
-    ClaimItem* item = new ClaimItem;
-    scene->addItem(item);
+//    ClaimItem* item = new ClaimItem;
+//    scene->addItem(item);
 
-    Invoice* invoice = new Invoice(1);
-    invoice->setAmount(100);
-    invoice->setServiceDates(QVariantList()
-                             << QDate::fromString("2016-01-01", DATE_FORMAT)
-                             << QDate::fromString("2016-01-02", DATE_FORMAT));
-    invoice->setInvoiceDate(QDate::fromString("2016-01-08", DATE_FORMAT));
-    invoice->setState(Invoice::Deposited);
-    item->setClaimElement(invoice);
+//    Invoice* invoice = new Invoice(1);
+//    invoice->setAmount(100);
+//    invoice->setServiceDates(QVariantList()
+//                             << QDate::fromString("2016-01-01", DATE_FORMAT)
+//                             << QDate::fromString("2016-01-02", DATE_FORMAT));
+//    invoice->setInvoiceDate(QDate::fromString("2016-01-08", DATE_FORMAT));
+//    invoice->setState(Invoice::Deposited);
+//    item->setClaimElement(invoice);
 
     connect(ui.actionAddProvider,       SIGNAL(triggered()), SLOT(onAddProvider()));
     connect(ui.actionAddInvoice,        SIGNAL(triggered()), SLOT(onAddInvoice()));
@@ -42,36 +42,43 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::onAddProvider()
 {
-    ClaimItemDlg dlg(new Provider(-1), this);
-    dlg.exec();
+    newItem(new Provider(-1));
 }
 
 void MainWindow::onAddInvoice()
 {
-    ClaimItemDlg dlg(new Invoice(-1), this);
-    dlg.exec();
+    newItem(new Invoice(-1));
 }
 
 void MainWindow::onAddClaim()
 {
-    ClaimItemDlg dlg(new Claim(-1), this);
-    dlg.exec();
+    newItem(new Claim(-1));
 }
 
 void MainWindow::onAddClaimResult()
 {
-    ClaimItemDlg dlg(new ClaimResult(-1), this);
-    dlg.exec();
+    newItem(new ClaimResult(-1));
 }
 
 void MainWindow::onAddDeposit()
 {
-    ClaimItemDlg dlg(new Deposit(-1), this);
-    dlg.exec();
+    newItem(new Deposit(-1));
 }
 
 void MainWindow::onAddAttachment()
 {
-    ClaimItemDlg dlg(new Attachment(-1), this);
-    dlg.exec();
+    newItem(new Attachment(-1));
+}
+
+void MainWindow::newItem(ClaimElement* element)
+{
+    ClaimItemDlg dlg(element, this);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        ClaimElement* element = dlg.getElement();
+
+        ClaimItem* item = new ClaimItem;
+        _scene->addItem(item);
+        item->setClaimElement(element);
+    }
 }
