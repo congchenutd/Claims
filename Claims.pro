@@ -4,7 +4,8 @@ TARGET = Claims
 TEMPLATE = app
 
 INCLUDEPATH +=	../MyORM \
-../DateListEdit
+../DateListEdit \
+../PathLineEdit
 
 SOURCES +=\
         MainWindow.cpp \
@@ -37,7 +38,8 @@ SOURCES +=\
     ../MyORM/PropertyLoader.cpp \
     DateRangeEdit.cpp \
     ../DateListEdit/DateListLineEdit.cpp \
-    GraphicsScene.cpp
+    GraphicsScene.cpp \
+    ../PathLineEdit/FilePathLineEdit.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -69,7 +71,8 @@ HEADERS  += MainWindow.h \
     ../MyORM/PropertyLoader.h \
     DateRangeEdit.h \
     ../DateListEdit/DateListLineEdit.h \
-    GraphicsScene.h
+    GraphicsScene.h \
+    ../PathLineEdit/FilePathLineEdit.h
 
 FORMS    += MainWindow.ui
 

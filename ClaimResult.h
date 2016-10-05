@@ -37,6 +37,9 @@ public:
 
     QString getDisplayName() const;
 
+    QList<ClaimElement*> createNextElements      () const;
+    QList<ClaimElement*> createSupportingElements() const;
+
 private:
     QDate   _date;
     double  _paidAmount;

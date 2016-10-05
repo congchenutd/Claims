@@ -1,6 +1,8 @@
+#include "Attachment.h"
 #include "ClaimResult.h"
 #include "Deposit.h"
 #include "DepositDAO.h"
+#include "AttachmentDAO.h"
 
 Deposit::Deposit(int id)
     : Attachable(id, DepositDAO::getInstance()),
@@ -30,4 +32,8 @@ ClaimResult* Deposit::getClaimResult() {
 
 void Deposit::setClaimResult(ClaimResult* result) {
     _result = result;
+}
+
+QList<ClaimElement*> Deposit::createSupportingElements() const {
+    return QList<ClaimElement*>() << new Attachment(AttachmentDAO::getInstance()->getNextID());
 }

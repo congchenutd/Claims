@@ -27,6 +27,8 @@ public:
     ClaimResult* getClaimResult();
     void setClaimResult(ClaimResult* result);
 
+    QList<ClaimElement*> createSupportingElements() const;
+
 private:
     QDate           _date;
     double          _amount;

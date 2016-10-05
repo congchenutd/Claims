@@ -2,6 +2,7 @@
 #include "ClaimItemDlg.h"
 #include "Constants.h"
 #include "DateListLineEdit.h"
+#include "FilePathLineEdit.h"
 #include <PropertyLoader.h>
 #include <QComboBox>
 #include <QDateEdit>
@@ -29,7 +30,7 @@ ClaimElement* ClaimItemDlg::getElement() const {
     return _element;
 }
 
-QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& property) const
+QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& property)
 {
     if (property.isEnumType())
     {
@@ -38,6 +39,11 @@ QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& 
         for (int i = 0; i < enumerator.keyCount(); ++i)
             combo->insertItem(i, enumerator.key(i));
         return combo;
+    }
+
+    if (QString(property.name()).contains("path", Qt::CaseInsensitive))
+    {
+        return new FilePathLineEdit(this);
     }
 
     switch (property.type())
