@@ -12,6 +12,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
 
+    static MainWindow* getInstance();
+
 private slots:
     void onAddProvider();
     void onAddInvoice();
@@ -20,12 +22,16 @@ private slots:
     void onAddDeposit();
     void onAddAttachment();
 
+    void onAddNextElement();
+    void onAddSupportingElement();
+
 private:
     void newItem(ClaimElement* element);
 
 private:
     Ui::MainWindow ui;
     QGraphicsScene* _scene;
+    static MainWindow* _instance;
 };
 
 #endif // MAINWINDOW_H

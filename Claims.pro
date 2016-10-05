@@ -3,7 +3,8 @@ QT       += core gui sql widgets
 TARGET = Claims
 TEMPLATE = app
 
-INCLUDEPATH +=	../MyORM
+INCLUDEPATH +=	../MyORM \
+../DateListEdit
 
 SOURCES +=\
         MainWindow.cpp \
@@ -33,7 +34,10 @@ SOURCES +=\
     ClaimItem.cpp \
     ClaimItemDlg.cpp \
     ../MyORM/PropertyPrinter.cpp \
-    ../MyORM/PropertyWriter.cpp
+    ../MyORM/PropertyLoader.cpp \
+    DateRangeEdit.cpp \
+    ../DateListEdit/DateListLineEdit.cpp \
+    GraphicsScene.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -60,9 +64,12 @@ HEADERS  += MainWindow.h \
     ClaimElement.h \
     ClaimItem.h \
     ClaimItemDlg.h \
+    ../MyORM/Constants.h \
     ../MyORM/PropertyPrinter.h \
-    ../MyORM/PropertyWriter.h \
-    ../MyORM/Constants.h
+    ../MyORM/PropertyLoader.h \
+    DateRangeEdit.h \
+    ../DateListEdit/DateListLineEdit.h \
+    GraphicsScene.h
 
 FORMS    += MainWindow.ui
 

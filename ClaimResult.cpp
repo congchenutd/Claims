@@ -22,11 +22,11 @@ void ClaimResult::setPaidAmount(double amount) {
     _paidAmount = amount;
 }
 
-QString ClaimResult::getState() const {
+ClaimResult::State ClaimResult::getState() const {
     return _state;
 }
 
-void ClaimResult::setState(const QString& state) {
+void ClaimResult::setState(State state) {
     _state = state;
 }
 
@@ -36,4 +36,8 @@ Claim* ClaimResult::getClaim() const {
 
 void ClaimResult::setClaim(Claim* claim) {
     _claim = claim;
+}
+
+QString ClaimResult::getDisplayName() const {
+    return "Claim Result";
 }

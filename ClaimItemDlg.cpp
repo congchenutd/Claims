@@ -1,6 +1,8 @@
 #include "ClaimElement.h"
 #include "ClaimItemDlg.h"
 #include "Constants.h"
+#include "DateListLineEdit.h"
+#include <PropertyLoader.h>
 #include <QComboBox>
 #include <QDateEdit>
 #include <QDialogButtonBox>
@@ -27,7 +29,7 @@ ClaimElement* ClaimItemDlg::getElement() const {
     return _element;
 }
 
-QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
+QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& property) const
 {
     if (property.isEnumType())
     {
@@ -46,12 +48,14 @@ QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
         spinBox->setMaximum(INT_MAX);
         return spinBox;
     }
+
     case QVariant::Double: {
         QDoubleSpinBox* doubleSpinBox = new QDoubleSpinBox;
         doubleSpinBox->setMinimum(INT_MIN);
         doubleSpinBox->setMaximum(INT_MAX);
         return doubleSpinBox;
     }
+
     case QVariant::Date: {
         QDateEdit* dateEdit = new QDateEdit;
         dateEdit->setDisplayFormat(DATE_FORMAT);
@@ -59,6 +63,10 @@ QWidget* ClaimItemDlg::createEditor(const QMetaProperty& property) const
         dateEdit->setCalendarPopup(true);
         return dateEdit;
     }
+
+    case QVariant::List:
+        return new DateListLineEdit("yyyy-MM-dd", '_', LIST_SEPARATOR);
+
     default:
         return new QLineEdit;
     }
@@ -70,22 +78,16 @@ void ClaimItemDlg::loadFrom(ClaimElement* element)
     const QMetaObject* metaObj = element->metaObject();
     setWindowTitle(metaObj->className());
 
-    int count = metaObj->propertyCount();
     int row = 0;
-    for (int i = metaObj->propertyOffset(); i < count; ++i, ++row)
+    foreach (const QMetaProperty& property, element->getAllProperties())
     {
-        QMetaProperty property = metaObj->property(i);
         const char* propertyName = property.name();
-
-        if (property.type() == QVariant::UserType)
-            continue;
-
-        _gridLayout->addWidget(new QLabel(QString(propertyName)), i, 0);
-        QWidget* editor = createEditor(property);
+        _gridLayout->addWidget(new QLabel(QString(propertyName)), row, 0);
+        QWidget* editor = createEditor(element, property);
         QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
         QVariant value = element->property(propertyName);
         editor->setProperty(editorUserPropertyName, value);
-        _gridLayout->addWidget(editor, i, 1);
+        _gridLayout->addWidget(editor, row++, 1);
         _editors.insert(QString(propertyName), editor);
     }
 
@@ -104,6 +106,8 @@ void ClaimItemDlg::saveTo(ClaimElement* element)
         QString     propertyName    = it.key();
         QWidget*    editor          = it.value();
         QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
-        element->setProperty(propertyName.toLatin1(), editor->property(editorUserPropertyName));
+        QVariant value = editor->property(editorUserPropertyName);
+        QVariant extractedValue = PropertyExtractor::extract(value);
+        element->setProperty(propertyName.toLatin1(), extractedValue);
     }
 }

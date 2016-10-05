@@ -7,30 +7,23 @@
 #include "ClaimResult.h"
 #include "Deposit.h"
 #include "Constants.h"
-#include <QGraphicsTextItem>
+#include "GraphicsScene.h"
+#include "InvoiceDAO.h"
+#include "ClaimDAO.h"
+#include "ClaimResultDAO.h"
+#include "DepositDAO.h"
+#include "AttachmentDAO.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     ui.setupUi(this);
 
-    _scene = new QGraphicsScene(this);
+    _scene = new GraphicsScene(this);
     _scene->setSceneRect(0, 0, 1000, 500);
 
     ui.allClaimsView->setScene(_scene);
     ui.allClaimsView->setRenderHint(QPainter::Antialiasing);
-
-//    ClaimItem* item = new ClaimItem;
-//    scene->addItem(item);
-
-//    Invoice* invoice = new Invoice(1);
-//    invoice->setAmount(100);
-//    invoice->setServiceDates(QVariantList()
-//                             << QDate::fromString("2016-01-01", DATE_FORMAT)
-//                             << QDate::fromString("2016-01-02", DATE_FORMAT));
-//    invoice->setInvoiceDate(QDate::fromString("2016-01-08", DATE_FORMAT));
-//    invoice->setState(Invoice::Deposited);
-//    item->setClaimElement(invoice);
 
     connect(ui.actionAddProvider,       SIGNAL(triggered()), SLOT(onAddProvider()));
     connect(ui.actionAddInvoice,        SIGNAL(triggered()), SLOT(onAddInvoice()));
@@ -38,6 +31,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui.actionAddClaimResult,    SIGNAL(triggered()), SLOT(onAddClaimResult()));
     connect(ui.actionAddDeposit,        SIGNAL(triggered()), SLOT(onAddDeposit()));
     connect(ui.actionAddAttachment,     SIGNAL(triggered()), SLOT(onAddAttachment()));
+
+}
+
+MainWindow* MainWindow::_instance = 0;
+
+MainWindow* MainWindow::getInstance()
+{
+    if (_instance == 0)
+        _instance = new MainWindow;
+    return _instance;
 }
 
 void MainWindow::onAddProvider()
@@ -47,27 +50,53 @@ void MainWindow::onAddProvider()
 
 void MainWindow::onAddInvoice()
 {
-    newItem(new Invoice(-1));
+    newItem(new Invoice(InvoiceDAO::getInstance()->getNextID()));
 }
 
 void MainWindow::onAddClaim()
 {
-    newItem(new Claim(-1));
+    newItem(new Claim(ClaimDAO::getInstance()->getNextID()));
 }
 
 void MainWindow::onAddClaimResult()
 {
-    newItem(new ClaimResult(-1));
+    newItem(new ClaimResult(ClaimResultDAO::getInstance()->getNextID()));
 }
 
 void MainWindow::onAddDeposit()
 {
-    newItem(new Deposit(-1));
+    newItem(new Deposit(DepositDAO::getInstance()->getNextID()));
 }
 
 void MainWindow::onAddAttachment()
 {
-    newItem(new Attachment(-1));
+    newItem(new Attachment(AttachmentDAO::getInstance()->getNextID()));
+}
+
+void MainWindow::onAddNextElement()
+{
+    QAction* action = static_cast<QAction*>(sender());
+    ClaimElement* nextElement = action->data().value<ClaimElement*>();
+
+    ClaimItemDlg dlg(nextElement);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        ClaimItem* item = new ClaimItem;
+        item->setClaimElement(nextElement);
+        _scene->addItem(item);
+    }
+}
+
+void MainWindow::onAddSupportingElement()
+{
+    QAction* action = static_cast<QAction*>(sender());
+    ClaimElement* supportingElement = action->data().value<ClaimElement*>();
+
+    ClaimItemDlg dlg(supportingElement);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+
+    }
 }
 
 void MainWindow::newItem(ClaimElement* element)

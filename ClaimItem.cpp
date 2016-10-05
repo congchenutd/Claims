@@ -1,9 +1,13 @@
 #include "ClaimElement.h"
 #include "ClaimItem.h"
 #include "PropertyPrinter.h"
+#include "MainWindow.h"
 #include <QFont>
 #include <QFontMetrics>
 #include <QDebug>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
+#include <QMetaObject>
 
 ClaimItem::ClaimItem(QGraphicsItem* parent)
     : QGraphicsPolygonItem(parent)
@@ -47,4 +51,26 @@ void ClaimItem::setClaimElement(ClaimElement* element)
 
 void ClaimItem::setNext(ClaimItem* next) {
     _next = next;
+}
+
+ClaimElement *ClaimItem::getElement() const {
+    return _element;
+}
+
+//void ClaimItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+//{
+//    QMenu menu;
+//    QList<ClaimElement*> nextElements = _element->createNextElements();
+//    foreach (ClaimElement* nextElement, nextElements)
+//    {
+//        QString nextElementName = nextElement->metaObject()->className();
+//        menu.addAction("Add " + nextElementName, MainWindow::getInstance(), SLOT(onAddNextElement()));
+//    }
+
+//    menu.exec(event->screenPos());
+//}
+
+void ClaimItem::onEdit()
+{
+
 }

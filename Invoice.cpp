@@ -1,5 +1,11 @@
+#include "Claim.h"
 #include "Invoice.h"
 #include "InvoiceDAO.h"
+#include "ClaimDAO.h"
+#include "Provider.h"
+#include "Attachment.h"
+#include "ProviderDAO.h"
+#include "AttachmentDAO.h"
 
 Invoice::Invoice(int id)
     : Attachable(id, InvoiceDAO::getInstance()),
@@ -46,4 +52,13 @@ Invoice::State Invoice::getState() const {
 
 void Invoice::setState(const State& state) {
     _state = state;
+}
+
+QList<ClaimElement*> Invoice::createNextElements() const {
+    return QList<ClaimElement*>() << new Claim(ClaimDAO::getInstance()->getNextID());
+}
+
+QList<ClaimElement*> Invoice::createSupportingElements() const {
+    return QList<ClaimElement*>() << new Provider  (ProviderDAO ::getInstance()->getNextID())
+                                  << new Attachment(AttachmentDAO::getInstance()->getNextID());
 }

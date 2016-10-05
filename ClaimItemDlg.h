@@ -19,7 +19,7 @@ public:
     ClaimElement* getElement() const;
 
 private:
-    QWidget* createEditor(const QMetaProperty& property) const;
+    QWidget* createEditor(ClaimElement* element, const QMetaProperty& property) const;
     void loadFrom(ClaimElement* element);
     void saveTo  (ClaimElement* element);
 

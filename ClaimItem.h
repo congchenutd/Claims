@@ -14,6 +14,14 @@ public:
     void setClaimElement(ClaimElement* element);
     void setNext(ClaimItem* next);
 
+    ClaimElement* getElement() const;
+
+//protected:
+//    void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+
+private slots:
+    void onEdit();
+
 private:
     ClaimElement*       _element;
     QGraphicsTextItem*  _text;

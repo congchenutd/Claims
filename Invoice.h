@@ -41,6 +41,9 @@ public:
     Provider* getProvider() const;
     void setProvider(Provider* provider);
 
+    QList<ClaimElement*> createNextElements      () const;
+    QList<ClaimElement*> createSupportingElements() const;
+
 private:
     QVariantList    _serviceDates;
     QDate           _invoiceDate;

@@ -1,6 +1,9 @@
+#include "Attachment.h"
 #include "Claim.h"
 #include "ClaimDAO.h"
 #include "ClaimResult.h"
+#include "AttachmentDAO.h"
+#include "ClaimResultDAO.h"
 
 Claim::Claim(int id)
     : Attachable (id, ClaimDAO::getInstance()),
@@ -47,4 +50,12 @@ ClaimResult* Claim::getClaimResult() const {
 void Claim::setClaimResult(ClaimResult* result) {
     _result = result;
     result->setClaim(this);
+}
+
+QList<ClaimElement*> Claim::createNextElements() const {
+    return QList<ClaimElement*>() << new ClaimResult(ClaimResultDAO::getInstance()->getNextID());
+}
+
+QList<ClaimElement*> Claim::createSupportingElements() const {
+    return QList<ClaimElement*>() << new Attachment(AttachmentDAO::getInstance()->getNextID());
 }
