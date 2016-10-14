@@ -3,7 +3,7 @@
 #include "Constants.h"
 #include "DateListLineEdit.h"
 #include "FilePathLineEdit.h"
-#include <PropertyLoader.h>
+#include "PropertyEditorAdapter.h"
 #include <QComboBox>
 #include <QDateEdit>
 #include <QDialogButtonBox>
@@ -30,7 +30,7 @@ ClaimElement* ClaimItemDlg::getElement() const {
     return _element;
 }
 
-QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& property)
+PropertyEditorAdapter* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& property)
 {
     if (property.isEnumType())
     {
@@ -38,13 +38,14 @@ QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& 
         QMetaEnum enumerator = property.enumerator();
         for (int i = 0; i < enumerator.keyCount(); ++i)
             combo->insertItem(i, enumerator.key(i));
-        return combo;
+        return new PropertyEditorAdapter(combo);
     }
 
     if (QString(property.name()).contains("path", Qt::CaseInsensitive))
-    {
-        return new FilePathLineEdit(this);
-    }
+        return new PropertyEditorAdapter(new FilePathLineEdit(this));
+
+    if (QString(property.name()).contains("dates", Qt::CaseInsensitive))
+        return new DateListEditAdapter(new DateListLineEdit("yyyy-MM-dd", '_', LIST_SEPARATOR));
 
     switch (property.type())
     {
@@ -52,14 +53,14 @@ QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& 
         QSpinBox* spinBox = new QSpinBox;
         spinBox->setMinimum(INT_MIN);
         spinBox->setMaximum(INT_MAX);
-        return spinBox;
+        return new PropertyEditorAdapter(spinBox);
     }
 
     case QVariant::Double: {
         QDoubleSpinBox* doubleSpinBox = new QDoubleSpinBox;
         doubleSpinBox->setMinimum(INT_MIN);
         doubleSpinBox->setMaximum(INT_MAX);
-        return doubleSpinBox;
+        return new PropertyEditorAdapter(doubleSpinBox);
     }
 
     case QVariant::Date: {
@@ -67,14 +68,11 @@ QWidget* ClaimItemDlg::createEditor(ClaimElement* element, const QMetaProperty& 
         dateEdit->setDisplayFormat(DATE_FORMAT);
         dateEdit->setDate(QDate::currentDate());
         dateEdit->setCalendarPopup(true);
-        return dateEdit;
+        return new PropertyEditorAdapter(dateEdit);
     }
 
-    case QVariant::List:
-        return new DateListLineEdit("yyyy-MM-dd", '_', LIST_SEPARATOR);
-
     default:
-        return new QLineEdit;
+        return new PropertyEditorAdapter(new QLineEdit);
     }
 }
 
@@ -89,11 +87,10 @@ void ClaimItemDlg::loadFrom(ClaimElement* element)
     {
         const char* propertyName = property.name();
         _gridLayout->addWidget(new QLabel(QString(propertyName)), row, 0);
-        QWidget* editor = createEditor(element, property);
-        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
+        PropertyEditorAdapter* editor = createEditor(element, property);
         QVariant value = element->property(propertyName);
-        editor->setProperty(editorUserPropertyName, value);
-        _gridLayout->addWidget(editor, row++, 1);
+        editor->setValue(value);
+        _gridLayout->addWidget(editor->getEditor(), row++, 1);
         _editors.insert(QString(propertyName), editor);
     }
 
@@ -109,11 +106,9 @@ void ClaimItemDlg::saveTo(ClaimElement* element)
 {
     for (Editors::iterator it = _editors.begin(); it != _editors.end(); ++it)
     {
-        QString     propertyName    = it.key();
-        QWidget*    editor          = it.value();
-        QByteArray editorUserPropertyName = editor->metaObject()->userProperty().name();
-        QVariant value = editor->property(editorUserPropertyName);
-        QVariant extractedValue = PropertyExtractor::extract(value);
-        element->setProperty(propertyName.toLatin1(), extractedValue);
+        QString                 propertyName    = it.key();
+        PropertyEditorAdapter*  editor          = it.value();
+        QVariant value = editor->getValue();
+        element->setProperty(propertyName.toLatin1(), value);
     }
 }

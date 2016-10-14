@@ -22,11 +22,11 @@ void Invoice::setProvider(Provider* provider) {
     _provider = provider;
 }
 
-QVariantList Invoice::getServiceDates() const {
+QString Invoice::getServiceDates() const {
     return _serviceDates;
 }
 
-void Invoice::setServiceDates(const QVariantList& dates) {
+void Invoice::setServiceDates(const QString &dates) {
     _serviceDates = dates;
 }
 
@@ -54,8 +54,8 @@ void Invoice::setState(const State& state) {
     _state = state;
 }
 
-QList<ClaimElement*> Invoice::createNextElements() const {
-    return QList<ClaimElement*>() << new Claim(ClaimDAO::getInstance()->getNextID());
+ClaimElement* Invoice::createNextElement() const {
+    return new Claim(ClaimDAO::getInstance()->getNextID());
 }
 
 QList<ClaimElement*> Invoice::createSupportingElements() const {

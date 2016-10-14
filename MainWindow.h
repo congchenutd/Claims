@@ -4,6 +4,7 @@
 #include "ui_MainWindow.h"
 
 class ClaimElement;
+class GraphicsScene;
 
 class MainWindow : public QMainWindow
 {
@@ -21,16 +22,21 @@ private slots:
     void onAddClaimResult();
     void onAddDeposit();
     void onAddAttachment();
+    void onZoomIn();
+    void onZoomOut();
+    void onZoomToFit();
+    void onZoomReset();
 
     void onAddNextElement();
     void onAddSupportingElement();
+    void onEditItem();
 
 private:
     void newItem(ClaimElement* element);
 
 private:
     Ui::MainWindow ui;
-    QGraphicsScene* _scene;
+    GraphicsScene* _scene;
     static MainWindow* _instance;
 };
 

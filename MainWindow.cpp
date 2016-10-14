@@ -13,17 +13,21 @@
 #include "ClaimResultDAO.h"
 #include "DepositDAO.h"
 #include "AttachmentDAO.h"
+#include "GraphicsScene.h"
+#include <QResizeEvent>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent)
 {
     ui.setupUi(this);
+    ui.splitter->setSizes(QList<int>() << 200 << 100);
 
     _scene = new GraphicsScene(this);
-    _scene->setSceneRect(0, 0, 1000, 500);
+    _scene->setSceneRect(0, 0, 1000, 1000);
 
     ui.allClaimsView->setScene(_scene);
     ui.allClaimsView->setRenderHint(QPainter::Antialiasing);
+    ui.allClaimsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
     connect(ui.actionAddProvider,       SIGNAL(triggered()), SLOT(onAddProvider()));
     connect(ui.actionAddInvoice,        SIGNAL(triggered()), SLOT(onAddInvoice()));
@@ -31,7 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui.actionAddClaimResult,    SIGNAL(triggered()), SLOT(onAddClaimResult()));
     connect(ui.actionAddDeposit,        SIGNAL(triggered()), SLOT(onAddDeposit()));
     connect(ui.actionAddAttachment,     SIGNAL(triggered()), SLOT(onAddAttachment()));
-
+    connect(ui.actionZoomToFit,         SIGNAL(triggered()), SLOT(onZoomToFit()));
+    connect(ui.actionZoomIn,            SIGNAL(triggered()), SLOT(onZoomIn()));
+    connect(ui.actionZoomOut,           SIGNAL(triggered()), SLOT(onZoomOut()));
 }
 
 MainWindow* MainWindow::_instance = 0;
@@ -73,6 +79,25 @@ void MainWindow::onAddAttachment()
     newItem(new Attachment(AttachmentDAO::getInstance()->getNextID()));
 }
 
+void MainWindow::onZoomIn()
+{
+    ui.allClaimsView->scale(1.2, 1.2);
+}
+
+void MainWindow::onZoomOut()
+{
+    ui.allClaimsView->scale(0.8, 0.8);
+}
+
+void MainWindow::onZoomToFit() {
+    ui.allClaimsView->fitInView(_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+}
+
+void MainWindow::onZoomReset()
+{
+
+}
+
 void MainWindow::onAddNextElement()
 {
     QAction* action = static_cast<QAction*>(sender());
@@ -81,9 +106,14 @@ void MainWindow::onAddNextElement()
     ClaimItemDlg dlg(nextElement);
     if (dlg.exec() == QDialog::Accepted)
     {
-        ClaimItem* item = new ClaimItem;
-        item->setClaimElement(nextElement);
-        _scene->addItem(item);
+        if (ClaimItem* item = _scene->getSelectedItem())
+        {
+            ClaimItem* nextItem = new ClaimItem;
+            nextItem->setElement(nextElement);
+            _scene->addItem(nextItem);
+            item->setNextItem(nextItem);
+            _scene->connectItems(item, nextItem);
+        }
     }
 }
 
@@ -99,6 +129,19 @@ void MainWindow::onAddSupportingElement()
     }
 }
 
+void MainWindow::onEditItem()
+{
+    QAction* action = static_cast<QAction*>(sender());
+    ClaimElement* element = action->data().value<ClaimElement*>();
+
+    ClaimItemDlg dlg(element);
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        if (ClaimItem* item = _scene->getSelectedItem())
+            item->setElement(element);
+    }
+}
+
 void MainWindow::newItem(ClaimElement* element)
 {
     ClaimItemDlg dlg(element, this);
@@ -108,6 +151,6 @@ void MainWindow::newItem(ClaimElement* element)
 
         ClaimItem* item = new ClaimItem;
         _scene->addItem(item);
-        item->setClaimElement(element);
+        item->setElement(element);
     }
 }

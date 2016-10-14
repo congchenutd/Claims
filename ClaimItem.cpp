@@ -2,29 +2,30 @@
 #include "ClaimItem.h"
 #include "PropertyPrinter.h"
 #include "MainWindow.h"
+#include "LineItem.h"
+#include "GraphicsScene.h"
 #include <QFont>
 #include <QFontMetrics>
 #include <QDebug>
-#include <QGraphicsSceneContextMenuEvent>
-#include <QMenu>
-#include <QMetaObject>
 
 ClaimItem::ClaimItem(QGraphicsItem* parent)
     : QGraphicsPolygonItem(parent)
 {
     setFlags(QGraphicsItem::ItemIsMovable |
              QGraphicsItem::ItemIsSelectable |
-             QGraphicsItem::ItemIsFocusable);
+             QGraphicsItem::ItemIsFocusable |
+             QGraphicsItem::ItemSendsGeometryChanges);
+    setBrush(Qt::white);
     _text = new QGraphicsTextItem(this);
     _next = 0;
 }
 
-void ClaimItem::setClaimElement(ClaimElement* element)
+void ClaimItem::setElement(ClaimElement* element)
 {
     _element = element;
 
     _text->setHtml(PersistablePrinter().toHtml(element));
-    _text->setFont(QFont("Arial", 18));
+    _text->setFont(QFont("Arial", 14));
 
     // Set geometry of the polygon and text
     QRectF  rect    = _text->boundingRect();
@@ -49,28 +50,39 @@ void ClaimItem::setClaimElement(ClaimElement* element)
     _text->setPos(left + margin, top + margin);
 }
 
-void ClaimItem::setNext(ClaimItem* next) {
-    _next = next;
-}
-
-ClaimElement *ClaimItem::getElement() const {
+ClaimElement* ClaimItem::getElement() const {
     return _element;
 }
 
-//void ClaimItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-//{
-//    QMenu menu;
-//    QList<ClaimElement*> nextElements = _element->createNextElements();
-//    foreach (ClaimElement* nextElement, nextElements)
-//    {
-//        QString nextElementName = nextElement->metaObject()->className();
-//        menu.addAction("Add " + nextElementName, MainWindow::getInstance(), SLOT(onAddNextElement()));
-//    }
+ClaimItem* ClaimItem::getNextItem() const {
+    return _next;
+}
 
-//    menu.exec(event->screenPos());
-//}
-
-void ClaimItem::onEdit()
+void ClaimItem::setNextItem(ClaimItem* next)
 {
+    _next = next;
+    getElement()->setNext(next->getElement());
+}
 
+void ClaimItem::addLineItem(LineItem* lineItem) {
+    _lineItems << lineItem;
+}
+
+QVariant ClaimItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
+{
+    if (change == QGraphicsItem::ItemPositionChange)
+    {
+        foreach (LineItem* lineItem, _lineItems)
+            lineItem->updatePosition();
+
+//        QPointF pos = value.toPointF();
+//        if (!scene()->sceneRect().contains(pos))
+//        {
+//            GraphicsScene* s = static_cast<GraphicsScene*>(scene());
+//            s->setSceneRect(0, 0, s->itemsBoundingRect().width(), s->itemsBoundingRect().height());
+//        }
+//        qDebug() << value.toPoint() << scene()->sceneRect();
+    }
+
+    return value;
 }

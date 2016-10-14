@@ -8,5 +8,8 @@
         <file>Images/Quit.png</file>
         <file>Images/Settings.png</file>
         <file>Images/Attachment.png</file>
+        <file>Images/Crop.png</file>
+        <file>Images/zoomin.png</file>
+        <file>Images/zoomout.png</file>
     </qresource>
 </RCC>

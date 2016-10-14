@@ -46,8 +46,8 @@ QString ClaimResult::getDisplayName() const {
     return "Claim Result";
 }
 
-QList<ClaimElement*> ClaimResult::createNextElements() const {
-   return QList<ClaimElement*>() << new Deposit(DepositDAO::getInstance()->getNextID());
+ClaimElement* ClaimResult::createNextElement() const {
+   return new Deposit(DepositDAO::getInstance()->getNextID());
 }
 
 QList<ClaimElement*> ClaimResult::createSupportingElements() const {

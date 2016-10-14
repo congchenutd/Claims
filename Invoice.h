@@ -17,7 +17,7 @@ public:
     Q_ENUMS(State)
 
     Q_OBJECT
-    Q_PROPERTY(QVariantList ServiceDates    READ getServiceDates    WRITE setServiceDates)
+    Q_PROPERTY(QString      ServiceDates    READ getServiceDates    WRITE setServiceDates)
     Q_PROPERTY(QDate        InvoiceDate     READ getInvoiceDate     WRITE setInvoiceDate)
     Q_PROPERTY(double       Amount          READ getAmount          WRITE setAmount)
     Q_PROPERTY(State        State           READ getState           WRITE setState)
@@ -26,8 +26,8 @@ public:
 public:
     Invoice(int id);
 
-    QVariantList getServiceDates() const;
-    void setServiceDates(const QVariantList& dates);
+    QString getServiceDates() const;
+    void setServiceDates(const QString& dates);
 
     QDate getInvoiceDate() const;
     void setInvoiceDate(const QDate& date);
@@ -41,16 +41,16 @@ public:
     Provider* getProvider() const;
     void setProvider(Provider* provider);
 
-    QList<ClaimElement*> createNextElements      () const;
+    ClaimElement* createNextElement() const;
     QList<ClaimElement*> createSupportingElements() const;
 
 private:
-    QVariantList    _serviceDates;
-    QDate           _invoiceDate;
-    double          _amount;
-    QString         _note;
-    State           _state;
-    Provider*       _provider;
+    QString     _serviceDates;
+    QDate       _invoiceDate;
+    double      _amount;
+    QString     _note;
+    State       _state;
+    Provider*   _provider;
 };
 
 #endif // INVOICE_H

@@ -37,7 +37,7 @@ public:
 
     QString getDisplayName() const;
 
-    QList<ClaimElement*> createNextElements      () const;
+    ClaimElement* createNextElement() const;
     QList<ClaimElement*> createSupportingElements() const;
 
 private:

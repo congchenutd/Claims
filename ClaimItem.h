@@ -4,28 +4,29 @@
 #include <QGraphicsPolygonItem>
 
 class ClaimElement;
-class QGraphicsTextItem;
+class LineItem;
 
 class ClaimItem : public QGraphicsPolygonItem
 {
 public:
     ClaimItem(QGraphicsItem* parent = 0);
 
-    void setClaimElement(ClaimElement* element);
-    void setNext(ClaimItem* next);
-
     ClaimElement* getElement() const;
+    void setElement(ClaimElement* element);
 
-//protected:
-//    void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+    ClaimItem* getNextItem() const;
+    void setNextItem(ClaimItem* next);
 
-private slots:
-    void onEdit();
+    void addLineItem(LineItem* lineItem);
+
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 
 private:
     ClaimElement*       _element;
     QGraphicsTextItem*  _text;
     ClaimItem*          _next;
+    QList<LineItem*>    _lineItems;
 };
 
 #endif // CLAIMITEM_H

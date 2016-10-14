@@ -12,8 +12,14 @@ class ClaimElement : public Persistable
 public:
     ClaimElement(int id, DAO* dao);
 
-    virtual QList<ClaimElement*> createNextElements      () const;
+    virtual ClaimElement* createNextElement() const;
     virtual QList<ClaimElement*> createSupportingElements() const;
+
+    ClaimElement* getNext() const;
+    void setNext(ClaimElement* next);
+
+protected:
+    ClaimElement* _next;
 };
 
 #endif // CLAIMELEMENT_H

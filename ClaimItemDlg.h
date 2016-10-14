@@ -8,6 +8,7 @@ class ClaimElement;
 class QDialogButtonBox;
 class QGridLayout;
 class QWidget;
+class PropertyEditorAdapter;
 
 class ClaimItemDlg : public QDialog
 {
@@ -19,12 +20,12 @@ public:
     ClaimElement* getElement() const;
 
 private:
-    QWidget* createEditor(ClaimElement* element, const QMetaProperty& property);
+    PropertyEditorAdapter* createEditor(ClaimElement* element, const QMetaProperty& property);
     void loadFrom(ClaimElement* element);
     void saveTo  (ClaimElement* element);
 
 private:
-    typedef QMap<QString, QWidget*> Editors;
+    typedef QMap<QString, PropertyEditorAdapter*> Editors;
     ClaimElement*       _element;
     QDialogButtonBox*   _buttonBox;
     QGridLayout*        _gridLayout;

@@ -5,10 +5,18 @@ ClaimElement::ClaimElement(int id, DAO* dao)
 {
 }
 
-QList<ClaimElement*> ClaimElement::createNextElements() const {
-    return QList<ClaimElement*>();
+ClaimElement* ClaimElement::createNextElement() const {
+    return 0;
 }
 
 QList<ClaimElement*> ClaimElement::createSupportingElements() const {
     return QList<ClaimElement*>();
+}
+
+ClaimElement* ClaimElement::getNext() const {
+    return _next;
+}
+
+void ClaimElement::setNext(ClaimElement* next) {
+    _next = next;
 }

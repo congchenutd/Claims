@@ -36,7 +36,7 @@ public:
     ClaimResult* getClaimResult() const;
     void setClaimResult(ClaimResult* result);
 
-    QList<ClaimElement*> createNextElements      () const;
+    ClaimElement* createNextElement() const;
     QList<ClaimElement*> createSupportingElements() const;
 
 private:

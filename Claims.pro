@@ -35,11 +35,13 @@ SOURCES +=\
     ClaimItem.cpp \
     ClaimItemDlg.cpp \
     ../MyORM/PropertyPrinter.cpp \
-    ../MyORM/PropertyLoader.cpp \
     DateRangeEdit.cpp \
     ../DateListEdit/DateListLineEdit.cpp \
     GraphicsScene.cpp \
-    ../PathLineEdit/FilePathLineEdit.cpp
+    ../PathLineEdit/FilePathLineEdit.cpp \
+    PropertyEditorAdapter.cpp \
+    LineItem.cpp \
+    GraphicsView.cpp
 
 HEADERS  += MainWindow.h \
     Invoice.h \
@@ -68,11 +70,13 @@ HEADERS  += MainWindow.h \
     ClaimItemDlg.h \
     ../MyORM/Constants.h \
     ../MyORM/PropertyPrinter.h \
-    ../MyORM/PropertyLoader.h \
     DateRangeEdit.h \
     ../DateListEdit/DateListLineEdit.h \
     GraphicsScene.h \
-    ../PathLineEdit/FilePathLineEdit.h
+    ../PathLineEdit/FilePathLineEdit.h \
+    PropertyEditorAdapter.h \
+    LineItem.h \
+    GraphicsView.h
 
 FORMS    += MainWindow.ui
 

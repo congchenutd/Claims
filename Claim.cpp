@@ -52,8 +52,8 @@ void Claim::setClaimResult(ClaimResult* result) {
     result->setClaim(this);
 }
 
-QList<ClaimElement*> Claim::createNextElements() const {
-    return QList<ClaimElement*>() << new ClaimResult(ClaimResultDAO::getInstance()->getNextID());
+ClaimElement* Claim::createNextElement() const {
+    return new ClaimResult(ClaimResultDAO::getInstance()->getNextID());
 }
 
 QList<ClaimElement*> Claim::createSupportingElements() const {

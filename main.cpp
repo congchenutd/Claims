@@ -16,6 +16,7 @@
 #include "ClaimResultDAO.h"
 #include "DepositDAO.h"
 #include "Deposit.h"
+#include "ClaimItem.h"
 
 #include <QApplication>
 #include <QSqlDatabase>
@@ -65,6 +66,7 @@ int main(int argc, char *argv[])
     if (!openDB("Claims.db"))
         return 1;
 
+	qRegisterMetaType<ClaimItem*>	("ClaimItem*");
 	qRegisterMetaType<ClaimElement*>("ClaimElement*");
     qRegisterMetaType<Provider*>    ("Provider*");
     qRegisterMetaType<Invoice*>     ("Invoice*");

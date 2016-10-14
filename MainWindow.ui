@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
+    <width>933</width>
     <height>623</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QGraphicsView" name="allClaimsView"/>
+      <widget class="GraphicsView" name="allClaimsView"/>
       <widget class="QListView" name="detailsView"/>
      </widget>
     </item>
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>796</width>
+     <width>933</width>
      <height>22</height>
     </rect>
    </property>
@@ -51,8 +51,8 @@
   <widget class="QToolBar" name="mainToolBar">
    <property name="iconSize">
     <size>
-     <width>64</width>
-     <height>48</height>
+     <width>48</width>
+     <height>32</height>
     </size>
    </property>
    <property name="toolButtonStyle">
@@ -64,12 +64,19 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionQuit"/>
+   <addaction name="actionSettings"/>
+   <addaction name="separator"/>
    <addaction name="actionAddProvider"/>
    <addaction name="actionAddInvoice"/>
    <addaction name="actionAddClaim"/>
    <addaction name="actionAddClaimResult"/>
    <addaction name="actionAddDeposit"/>
    <addaction name="actionAddAttachment"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionZoomToFit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSettings">
@@ -144,8 +151,45 @@
     <string>Add Attachment</string>
    </property>
   </action>
+  <action name="actionZoomToFit">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/Crop.png</normaloff>:/Images/Crop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom to fit</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom to fit</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/zoomin.png</normaloff>:/Images/zoomin.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/Images/zoomout.png</normaloff>:/Images/zoomout.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>GraphicsView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
